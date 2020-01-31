@@ -1,4 +1,4 @@
-package ballmeet.players;
+package sportsmate.players;
 
 import org.junit.*;
 import static org.junit.Assert.*;

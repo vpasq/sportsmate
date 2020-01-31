@@ -1,4 +1,4 @@
-package ballmeet.players;
+package sportsmate.players;
 
 /**
  * This Class represents a Player.
