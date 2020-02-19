@@ -65,7 +65,7 @@ public class TestConnection {
   @Test
   public void testSuccessDAOconnection() {
 
-    DAO dao = new DAOBase();
+    DAO dao = new DAO();
 
 
   }
