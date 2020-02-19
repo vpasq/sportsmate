@@ -12,6 +12,7 @@ public class RegisterMenu extends AbstractMenu {
   /**
    * Displays menu to register a new account.
    */
+  @Override
   public String[] displayMenu() {
     String userFirstName;
     String userLastName;

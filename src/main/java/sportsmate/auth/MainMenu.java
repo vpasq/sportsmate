@@ -7,6 +7,7 @@ public class MainMenu extends AbstractMenu {
   /**
    *  Displays main menu.
    */
+  @Override
   public String[] displayMenu() {
 
     getPrompt("\nWelcome to SportsMate!\n" + getLineBreak(22));
