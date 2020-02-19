@@ -1,5 +1,7 @@
 ![Readme image](readme.png)
 
+# SportsMate ([UML Diagram](https://github.com/vpasq/sportsmate/blob/master/SportsMate_UML.pdf)) 
+
 # The Product Vision 
 FOR lots of basketball players or amateurs WHO need related resources of basketball to play, 
 THE BallMeet is a basketball social app THAT provides gym reserving, team system, and match 
