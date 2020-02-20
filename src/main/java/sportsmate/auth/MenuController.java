@@ -91,13 +91,13 @@ public class MenuController {
         }
     }
 
-    if (menu.getClass().getName().equals("sportsmate.auth.LoginOrExit")) {
+    if (menu.getClass().getName().equals("sportsmate.auth.LoginOrExitMenu")) {
       switch (selection) {
         case "1":
           setMenu(new LogInMenu());
           displayMenu();
           break;
-        case "3":
+        case "2":
           System.out.println("\nExiting...\n");
           System.exit(1);
           break;
