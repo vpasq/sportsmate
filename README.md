@@ -1,6 +1,7 @@
 ![Readme image](readme.png)
 
 # SportsMate ([UML Diagram](https://github.com/vpasq/sportsmate/blob/master/SportsMate_UML.pdf)) 
+A Java Maven Project of a sports media application with a focus on basketball.
 
 # The Product Vision 
 FOR lots of basketball players or amateurs WHO need related resources of basketball to play, 
