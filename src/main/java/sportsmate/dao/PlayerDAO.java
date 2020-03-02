@@ -7,19 +7,13 @@ import java.sql.Statement;
 import java.sql.Connection;
 
 public class PlayerDAO extends DAO {
-  private String sql;
   private Connection conn;
-  private PreparedStatement pStatement;
-  private String fname;
-  private String lname;
-  private String gender;
-  private String password;
 
-  public void createPlayer(String fname, String lname, String gender, String username, String pswd) {
-    this.fname = fname;
-    this.lname = lname;
-    this.gender = gender;
-    this.password = pswd;
+  public void createPlayer(String fname, String lname, String gender,
+      String username, String pswd) {
+
+    String sql;
+    PreparedStatement pStatement;
 
     try {
       conn = getConnection();
@@ -52,7 +46,7 @@ public class PlayerDAO extends DAO {
     if (conn != null) {
       try {
         conn.close ();
-        System.out.println ("Disconnected from database.");
+        //System.out.println ("Disconnected from database.");
       }
       catch (Exception e) { /* ignore close errors */ }
     }

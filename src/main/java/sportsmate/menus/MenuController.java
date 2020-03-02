@@ -1,12 +1,15 @@
 package sportsmate.menus;
 
 import sportsmate.dao.DAO;
+import sportsmate.dao.LoggedInUserDAO;
 import sportsmate.dao.LoginDAO;
+import sportsmate.dao.PersonalMatchDAO;
 import sportsmate.dao.PlayerDAO;
 
 public class MenuController {
   private AbstractMenu menu;
   private DAO dao;
+  private int loggedInUserID;
 
   /**
    * Sets the menu reference type.
@@ -71,6 +74,7 @@ public class MenuController {
       if (UserExists) {
         menu.getPrompt("\n" + menu.getLineBreak(username.length(), 39) + "\nHello " + username + ", "
             + "you have succesfully logged in!\n");
+        loggedInUserID = loginDao.getLoggedInUserID();
         setMenu(new PersonalTeamMenu());
         displayMenu();
       } else {
@@ -98,6 +102,9 @@ public class MenuController {
     if (menu instanceof PersonalTeamMenu) {
       switch (selection) {
         case "1":
+          setMenu(new CreatePersonalMatchMenu());
+          displayMenu();
+          break;
         case "2":
         case "3":
           System.out.println("\nExiting...\n");
@@ -108,5 +115,33 @@ public class MenuController {
       }
     }
 
+    if (menu instanceof CreatePersonalMatchMenu) {
+      String location = selectionArr[0];
+      String game_date = selectionArr[1];
+      String startAt = selectionArr[2];
+      String endAt = selectionArr[3];
+      String game_type = selectionArr[4];
+      String num_current_players = selectionArr[5];
+
+//      System.out.println("loggedInUserID: " + loggedInUserID + "\n");
+//      System.out.println("location: " + location + "\n");
+//      System.out.println("game_date: " + game_date + "\n");
+//      System.out.println("startAt: " + startAt + "\n");
+//      System.out.println("endAt: " + endAt + "\n");
+//      System.out.println("game_type: " + game_type + "\n");
+//      System.out.println("num_current_players: " + num_current_players + "\n");
+
+      PersonalMatchDAO personalMatchDAO = new PersonalMatchDAO();
+      personalMatchDAO.createPersonalMatch(loggedInUserID, location, game_date, startAt, endAt, game_type, num_current_players);
+      setMenu(new PersonalTeamMenu());
+      displayMenu();
+    }
+
   }
+
+
+  private int getLoggedInUserID() {
+    return loggedInUserID;
+  }
+
 }

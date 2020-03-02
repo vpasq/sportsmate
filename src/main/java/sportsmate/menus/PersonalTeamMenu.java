@@ -8,7 +8,7 @@ public class PersonalTeamMenu extends AbstractMenu {
    */
   @Override
   public String[] displayMenu() {
-          getPrompt("\nEnter 1 to Join a Personal Match\nEnter 2 to Create a Personal Match"
+          getPrompt("\nEnter 1 to Create a Personal Match\nEnter 2 to Join a Personal Match"
           + "\nEnter 3 to Exit");
 
     try {

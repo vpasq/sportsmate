@@ -25,7 +25,7 @@ public class TestInit {
   public void testCreateTables() {
     // setup
     CreateTables createTables = new CreateTables();
-    String expected = "user:player:";
+    String expected = "user:player:personal_match:";
 
     // exercise
     String actual  = createTables.getTablesCreated();
@@ -53,20 +53,20 @@ public class TestInit {
     dropTables = null;
   }
 
-//  @Test
-//  public void testDropDatabase() {
-//    // setup
-//    DropDatabase dropDatabase = new DropDatabase();
-//    String expected = "database dropped";
-//
-//    // exercise
-//    String actual  = dropDatabase.getDatabaseDropped();
-//
-//    // verify
-//    assertEquals(expected, actual);
-//
-//    // teardown
-//    dropDatabase = null;
-//  }
+  @Test
+  public void testDropDatabase() {
+    // setup
+    DropDatabase dropDatabase = new DropDatabase();
+    String expected = "database dropped";
+
+    // exercise
+    String actual  = dropDatabase.getDatabaseDropped();
+
+    // verify
+    assertEquals(expected, actual);
+
+    // teardown
+    dropDatabase = null;
+  }
 
 }

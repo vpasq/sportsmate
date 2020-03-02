@@ -23,7 +23,8 @@ public class MainApp {
 
 
 // Run from terminal
-//=======================
+// (Don't use! See README.md)
+//===================================================
 // cd ~/vp/repos/sportsmate/target/classes
 // java -cp .:sportsmate/ sportsmate.MainApp
 

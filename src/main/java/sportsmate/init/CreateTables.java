@@ -52,8 +52,20 @@ public class CreateTables extends DAO {
           + "("
           + " pmatch_id integer primary key auto_increment,"
           + " player_id integer NOT NULL,"
+          + " location varchar(25) NOT NULL,"
+          + " game_date DATE NOT NULL,"
+          + " start_at TIME NOT NULL,"
+          + " end_at TIME NOT NULL,"
+          + " game_type varchar(25) NOT NULL,"
+          + " num_current_players integer,"
           + " foreign key (player_id) references player(pid)"
           + ")";
+
+      pStatement = conn
+          .prepareStatement(sql);
+      pStatement.execute();
+      tablesCreated += "personal_match:";
+      System.out.println("table created successfully...");
 
 
     }
