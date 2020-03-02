@@ -6,13 +6,13 @@ import java.sql.Statement;
 import sportsmate.dao.DAO;
 
 public class CreateDatabase extends DAO {
-  private Connection conn;
-  private String url = "jdbc:mysql://localhost";
-  private String username = "vpasq";
-  private String password = "test";
   private String databaseCreated;
 
   public CreateDatabase() {
+    Connection conn;
+    String url = "jdbc:mysql://localhost";
+    String username = "vpasq";
+    String password = "test";
 
     try {
       conn = DriverManager.getConnection(url, username, password);

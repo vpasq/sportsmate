@@ -6,12 +6,12 @@ import java.sql.Statement;
 import sportsmate.dao.DAO;
 
 public class DropTables extends DAO {
-  private String sql;
   private Connection conn;
-  private PreparedStatement pStatement;
   private String tablesDropped;
 
   public DropTables() {
+    String sql;
+    PreparedStatement pStatement;
 
     try {
       conn = getConnection();

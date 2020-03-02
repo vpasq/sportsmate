@@ -7,12 +7,13 @@ import java.sql.Statement;
 import sportsmate.dao.DAO;
 
 public class CreateTables extends DAO {
-  private String sql;
   private Connection conn;
-  private PreparedStatement pStatement;
   private String tablesCreated;
 
   public CreateTables() {
+    String sql;
+    PreparedStatement pStatement;
+
     try {
       conn = getConnection();
 
