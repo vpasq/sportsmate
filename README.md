@@ -26,7 +26,6 @@ chance to let basketball lovers talk in the real world.
 2. cd sportsmate
 3. mvn clean compile
 4. mvn exec:java -Dexec.mainClass=sportsmate.MainApp
-5. Follow menu prompts to register
 ```
 
 # Version
