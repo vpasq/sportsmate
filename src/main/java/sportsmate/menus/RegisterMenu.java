@@ -22,7 +22,7 @@ public class RegisterMenu extends AbstractMenu {
     getPrompt("Enter your last name: ");
     userLastName = getScanner().nextLine();
 
-    getPrompt("Enter your Gender: ");
+    getPrompt("Enter your gender: ");
     userGender = getScanner().nextLine();
 
     Console console = System.console();
@@ -31,7 +31,7 @@ public class RegisterMenu extends AbstractMenu {
       System.exit(1);
     }
 
-    String username = console.readLine("Enter a Username: ");
+    String username = console.readLine("Enter a username: ");
 
     char[] passwordArray = console.readPassword("Enter your secret password: ");
 

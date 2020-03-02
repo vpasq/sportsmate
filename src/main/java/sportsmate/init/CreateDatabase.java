@@ -11,8 +11,8 @@ public class CreateDatabase extends DAO {
   public CreateDatabase() {
     Connection conn;
     String url = "jdbc:mysql://localhost";
-    String username = "vpasq";
-    String password = "test";
+    String username = "demo";
+    String password = "demo";
 
     try {
       conn = DriverManager.getConnection(url, username, password);
