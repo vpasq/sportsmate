@@ -13,12 +13,20 @@ chance to let basketball lovers talk in the real world.
 ### Setup the MySQL Database
 ```bash
 1. Install MySQL
-2. Log into MySQL as the root user
-3. Create a new database user: CREATE USER 'demo'@'localhost' IDENTIFIED BY 'demo';
-4. Grant access to new database user: GRANT ALL ON sportsmate.* TO 'demo'@'localhost';
-5. List privileges granted to new database user: SHOW GRANTS FOR 'demo'@'localhost';  
+2. Log into MySQL as the root user: (See Handy MySQL Tips below)
+3. Create a new database user:  CREATE USER 'demo'@'localhost' IDENTIFIED BY 'demo';
+4. Grant access to new database user:  GRANT ALL ON sportsmate.* TO 'demo'@'localhost';
+5. List privileges granted to new database user:  SHOW GRANTS FOR 'demo'@'localhost';  
 4. Log out of MySQL by typing: \q
 ```
+
+### Handy MySQL Tips and Commands
+* In MySQL, by default, the username is root and there is no password.
+* The default password for MySQL under MAMP / MAMP Pro is username: root, password: root. 
+* Log into MySQl as the root user with default password:  mysql -h localhost -u root -p
+* Log into MySQl as the root user using MAMP / MAMP Pro:  mysql -h localhost -u root -proot
+* Drop new user created above: DROP USER 'demo'@'localhost';
+
 
 ### Clone the sportsmate repository and run the project using Maven
 ```bash
