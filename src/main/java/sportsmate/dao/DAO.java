@@ -9,12 +9,13 @@ import java.sql.Statement;
 public class DAO {
 
   public Connection getConnection() {
-    String url = "jdbc:mysql://localhost:3306/sportsmate";
-    String userName = "vpasq";
+    //String url = "jdbc:mysql://localhost:3306/sportsmate";
+    String url = "jdbc:mysql://localhost/sportsmate";
+    String username = "vpasq";
     String password = "test";
 
     try  {
-        return DriverManager.getConnection(url, userName, password);
+        return DriverManager.getConnection(url, username, password);
       }
     catch (SQLException e) {
         System.err.println(e.getMessage());

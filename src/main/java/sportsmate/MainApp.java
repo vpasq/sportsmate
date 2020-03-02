@@ -1,7 +1,9 @@
 package sportsmate;
 
-import sportsmate.auth.MainMenu;
-import sportsmate.auth.MenuController;
+import sportsmate.menus.MainMenu;
+import sportsmate.menus.MenuController;
+import sportsmate.init.CreateDatabase;
+import sportsmate.init.CreateTables;
 
 public class MainApp {
 
@@ -11,6 +13,8 @@ public class MainApp {
    * @param args command line arguments
    */
   public static void main(String[] args) {
+    new CreateDatabase();
+    new CreateTables();
     MenuController mc = new MenuController();
     mc.setMenu(new MainMenu());
     mc.displayMenu();

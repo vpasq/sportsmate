@@ -1,4 +1,4 @@
-package sportsmate.auth;
+package sportsmate.menus;
 
 import java.util.Scanner;
 

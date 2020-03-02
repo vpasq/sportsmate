@@ -1,4 +1,4 @@
-package sportsmate.auth;
+package sportsmate.menus;
 
 import java.io.Console;
 
@@ -17,12 +17,12 @@ public class LogInMenu extends AbstractMenu {
       System.exit(1);
     }
 
-    getPrompt(getLineBreak(6) + "\nLog In");
-    String username = console.readLine("\nEnter Username: ");
+    getPrompt(getLineBreak(6) + "\nLog In\n\n");
+    String username = console.readLine("Enter Username: ");
 
     char[] passwordArray = console.readPassword("Enter password: ");
 
-    String[] str = {"-1", username, new String(passwordArray)};
+    String[] str = {username, new String(passwordArray)};
     return str;
   }
 }

@@ -1,4 +1,4 @@
-package sportsmate.auth;
+package sportsmate.menus;
 
 import sportsmate.dao.DAO;
 import sportsmate.dao.LoginDAO;
@@ -31,7 +31,8 @@ public class MenuController {
    */
   private void checkMenuSelection(String[] selectionArr) {
     String selection = selectionArr[0];
-    if (menu.getClass().getName().equals("sportsmate.auth.MainMenu")) {
+
+    if (menu instanceof MainMenu) {
       switch (selection) {
         case "1":
           setMenu(new RegisterMenu());
@@ -50,48 +51,36 @@ public class MenuController {
       }
     }
 
-    if (menu.getClass().getName().equals("sportsmate.auth.RegisterMenu")) {
+    if (menu instanceof RegisterMenu) {
       String userFirstName = selectionArr[0];
       String userLastName = selectionArr[1];
       String username = selectionArr[2];
-      String pswd = selectionArr[3];
+      String userGender = selectionArr[3];
+      String password = selectionArr[4];
       PlayerDAO playerDao = new PlayerDAO();
-      playerDao.createPlayer(userFirstName, userLastName, username, pswd);
+      playerDao.createPlayer(userFirstName, userLastName, userGender, username, password);
       setMenu(new LoginOrExitMenu());
       displayMenu();
     }
 
-    if (menu.getClass().getName().equals("sportsmate.auth.LogInMenu")) {
-      String username = selectionArr[1];
-      String pswd = selectionArr[2];
+    if (menu instanceof LogInMenu) {
+      String username = selectionArr[0];
+      String pswd = selectionArr[1];
       LoginDAO loginDao = new LoginDAO();
       boolean UserExists = loginDao.authLogin(username, pswd);
       if (UserExists) {
-        getPrompt("\n" + getLineBreak(username.length(), 39) + "\nHello " + username + ", "
+        menu.getPrompt("\n" + menu.getLineBreak(username.length(), 39) + "\nHello " + username + ", "
             + "you have succesfully logged in!\n");
         setMenu(new PersonalTeamMenu());
         displayMenu();
       } else {
-        getPrompt(getLineBreak(49) + "\nUsername and Password Combination Does Not Exist!");
+        menu.getPrompt("\n" + menu.getLineBreak(40) + "\nUsername and/or Password Does Not Exist!\n");
         System.out.println("\nExiting...\n");
         System.exit(1);
       }
     }
 
-    if (menu.getClass().getName().equals("sportsmate.auth.PersonalTeamMenu")) {
-      switch (selection) {
-        case "1":
-        case "2":
-        case "3":
-          System.out.println("\nExiting...\n");
-          System.exit(1);
-          break;
-        default:
-          break;
-        }
-    }
-
-    if (menu.getClass().getName().equals("sportsmate.auth.LoginOrExitMenu")) {
+    if (menu instanceof LoginOrExitMenu) {
       switch (selection) {
         case "1":
           setMenu(new LogInMenu());
@@ -105,44 +94,19 @@ public class MenuController {
           break;
       }
     }
-  }
 
-  /**
-   * Concatenates correct number of characters for line break.
-   *
-   * @param num number of initial characters in line break
-   * @param usernameLength number of characters in username.
-   * @return a line break with correct number of characters
-   */
-  protected String getLineBreak(int usernameLength, int num) {
-    String lineBreak = "";
-    for (int i = 0; i < usernameLength + num; i++) {
-      lineBreak += "=";
+    if (menu instanceof PersonalTeamMenu) {
+      switch (selection) {
+        case "1":
+        case "2":
+        case "3":
+          System.out.println("\nExiting...\n");
+          System.exit(1);
+          break;
+        default:
+          break;
+      }
     }
-    return lineBreak;
-  }
 
-  /**
-   * Concatenates set number of characters for line break.
-   *
-   * @param num the number of characters in the line break
-   * @return a line break with a set number of characters
-   */
-  protected String getLineBreak(int num) {
-    String lineBreak = "";
-    for (int i = 0; i < num; i++) {
-      lineBreak += "=";
-    }
-    return lineBreak;
   }
-
-  /**
-   * User prompt.
-   *
-   * @param str string to prompt user
-   */
-  public void getPrompt(String str) {
-    System.out.print(str);
-  }
-
 }

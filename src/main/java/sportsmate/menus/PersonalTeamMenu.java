@@ -1,4 +1,4 @@
-package sportsmate.auth;
+package sportsmate.menus;
 
 import java.util.NoSuchElementException;
 
@@ -8,7 +8,7 @@ public class PersonalTeamMenu extends AbstractMenu {
    */
   @Override
   public String[] displayMenu() {
-          getPrompt("\nEnter 1 to Join a Personal Team\nEnter 2 to Create a Personal Team"
+          getPrompt("\nEnter 1 to Join a Personal Match\nEnter 2 to Create a Personal Match"
           + "\nEnter 3 to Exit");
 
     try {

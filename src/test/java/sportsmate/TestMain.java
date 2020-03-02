@@ -1,7 +1,7 @@
 package sportsmate;
 
 import org.junit.*;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class TestMain {
 
@@ -19,11 +19,6 @@ public class TestMain {
 
     // teardown
     //conn = null;
-  }
-
-  @Test
-  public void testSuccessfulDBConnection2() {
-
   }
 
 }

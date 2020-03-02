@@ -1,11 +1,7 @@
-package sportsmate.auth;
-
+package sportsmate.menus;
 
 import java.io.Console;
 import java.util.Arrays;
-import java.util.NoSuchElementException;
-import org.springframework.util.DigestUtils;
-import sportsmate.dao.PlayerDAO;
 
 public class RegisterMenu extends AbstractMenu {
 
@@ -16,6 +12,7 @@ public class RegisterMenu extends AbstractMenu {
   public String[] displayMenu() {
     String userFirstName;
     String userLastName;
+    String userGender;
 
     getPrompt(getLineBreak(20) + "\nCreate a new account\n\n");
 
@@ -24,6 +21,9 @@ public class RegisterMenu extends AbstractMenu {
 
     getPrompt("Enter your last name: ");
     userLastName = getScanner().nextLine();
+
+    getPrompt("Enter your Gender: ");
+    userGender = getScanner().nextLine();
 
     Console console = System.console();
     if (console == null) {
@@ -44,7 +44,7 @@ public class RegisterMenu extends AbstractMenu {
       passwordArrayConfirm = console.readPassword("Confirm your secret password: ");
     }
 
-    String[] str = {userFirstName, userLastName, username, new String(passwordArray)};
+    String[] str = {userFirstName, userLastName, username, userGender, new String(passwordArray)};
 
     // Immediately overwrite password array elements with a filler value.
     Arrays.fill(passwordArray, 'x');

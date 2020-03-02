@@ -10,13 +10,21 @@ function that provide a chance to know people online and play basketball at real
 UNLIKE other basketball social app or basketball equipment sales app, OUR product provides the 
 chance to let basketball lovers talk in the real world. 
 
-# Install
+# Setup the MySQL Database
+```bash
+1.  Install MySQL
+2.  Log into MySQL as the root user
+3.  Create a new database user: CREATE USER 'vpasq'@'localhost' IDENTIFIED BY 'test';
+4.  Log out of MySQL by typing: \q
+```
+
+# Clone the sportsmate repository and run the project using Maven
 ```bash
 1. git clone https://github.com/vpasq/sportsmate.git
 2. cd sportsmate
 3. mvn clean compile
 4. mvn exec:java -Dexec.mainClass=sportsmate.MainApp
-
+5. Follow menu prompts to register
 ```
 
 # Version

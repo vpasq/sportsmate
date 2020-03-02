@@ -17,7 +17,7 @@ public class LoginDAO extends DAO {
     try {
       conn = getConnection();
       String sql = "select * from user where username=? and password=?";
-      PreparedStatement pStatement = getConnection().prepareStatement(sql);
+      PreparedStatement pStatement = conn.prepareStatement(sql);
       pStatement.setString(1, this.username);
       pStatement.setString(2, this.password);
       ResultSet resultSet = pStatement.executeQuery();
