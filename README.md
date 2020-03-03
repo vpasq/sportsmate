@@ -5,9 +5,9 @@ A Java Maven Project of a sports media application with a focus on basketball.
 
 ### The Product Vision 
 For lots of basketball players or amateurs who need related resources of basketball to play, 
-the Sportsmate is a basketball social app that provides gym reserving, team system, and match 
-function that provide a chance to know people online and play basketball at real basketball court. 
-Unlike other basketball social app or basketball equipment sales app, OUR product provides the 
+SportsMate is a basketball social app that provides gym reserving, team system, and match 
+functions that provide a chance to know people online and play basketball at real basketball courts. 
+Unlike other basketball social apps or basketball equipment sales apps, our product provides the 
 chance to let basketball lovers talk in the real world. 
 
 ### Setup the MySQL Database
