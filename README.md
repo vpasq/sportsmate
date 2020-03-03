@@ -38,7 +38,7 @@ chance to let basketball lovers talk in the real world.
 4. mvn exec:java -Dexec.mainClass=sportsmate.MainApp
 ```
 
-# Version
+### Version
 1.0.0
 
 
