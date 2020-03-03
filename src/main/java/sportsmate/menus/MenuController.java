@@ -121,7 +121,7 @@ public class MenuController {
       String startAt = selectionArr[2];
       String endAt = selectionArr[3];
       String game_type = selectionArr[4];
-      String num_current_players = selectionArr[5];
+      int num_initial_players = Integer.parseInt(selectionArr[5]);
 
 //      System.out.println("loggedInUserID: " + loggedInUserID + "\n");
 //      System.out.println("location: " + location + "\n");
@@ -132,7 +132,8 @@ public class MenuController {
 //      System.out.println("num_current_players: " + num_current_players + "\n");
 
       PersonalMatchDAO personalMatchDAO = new PersonalMatchDAO();
-      personalMatchDAO.createPersonalMatch(loggedInUserID, location, game_date, startAt, endAt, game_type, num_current_players);
+      personalMatchDAO.createPersonalMatch(loggedInUserID, location, game_date, startAt, endAt,
+          game_type, num_initial_players);
       setMenu(new PersonalTeamMenu());
       displayMenu();
     }

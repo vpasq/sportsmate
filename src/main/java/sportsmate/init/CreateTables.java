@@ -57,7 +57,8 @@ public class CreateTables extends DAO {
           + " start_at TIME NOT NULL,"
           + " end_at TIME NOT NULL,"
           + " game_type varchar(25) NOT NULL,"
-          + " num_current_players integer,"
+          + " num_initial_players integer,"
+          + " num_players_joined integer,"
           + " foreign key (player_id) references player(pid)"
           + ")";
 

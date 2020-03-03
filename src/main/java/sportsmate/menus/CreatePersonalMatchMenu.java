@@ -15,7 +15,7 @@ public class CreatePersonalMatchMenu extends AbstractMenu {
     String startAt;
     String endAt;
     String game_type;
-    String num_current_players;
+    String num_initial_players;
 
     getPrompt(getLineBreak(27) + "\nCreate a new Personal Match\n\n");
 
@@ -34,11 +34,11 @@ public class CreatePersonalMatchMenu extends AbstractMenu {
     getPrompt("Enter the game type: ");
     game_type = getScanner().nextLine();
 
-    getPrompt("Enter the number of current players: ");
-    num_current_players = getScanner().nextLine();;
+    getPrompt("Enter the number of initial players: ");
+    num_initial_players = getScanner().nextLine();
 
 
-    String[] str = {location, game_date, startAt, endAt, game_type, num_current_players};
+    String[] str = {location, game_date, startAt, endAt, game_type, num_initial_players};
     return str;
   }
 }

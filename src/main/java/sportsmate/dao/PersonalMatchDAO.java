@@ -10,14 +10,14 @@ public class PersonalMatchDAO extends DAO {
   private Connection conn;
 
   public void createPersonalMatch(int userID, String location, String game_date, String startAt,
-      String endAt, String game_type, String num_current_players) {
+      String endAt, String game_type, int num_initial_players) {
 
     String sql;
     PreparedStatement pStatement;
 
     try {
       conn = getConnection();
-      sql = "INSERT INTO personal_match VALUES (default, ?,?,?,?,?,?,?)";
+      sql = "INSERT INTO personal_match VALUES (default, ?,?,?,?,?,?,?,?)";
       pStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
       pStatement.setInt(1, userID);
       pStatement.setString(2, location);
@@ -25,7 +25,8 @@ public class PersonalMatchDAO extends DAO {
       pStatement.setString(4, startAt);
       pStatement.setString(5, endAt);
       pStatement.setString(6, game_type);
-      pStatement.setString(7, num_current_players);
+      pStatement.setInt(7, num_initial_players );
+      pStatement.setInt(8, 0 );
       pStatement.executeUpdate();
       System.out.println("\nYou have successfully created a personal match!");
 

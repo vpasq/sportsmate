@@ -7,9 +7,9 @@ import org.junit.*;
 import static org.junit.Assert.*;
 
 public class TestConnection {
-  private String url = "jdbc:mysql://localhost:3306/sportsmate";
-  private String userName = "vpasq";
-  private String password = "test";
+  private String url = "jdbc:mysql://localhost/sportsmate";
+  private String userName = "demo";
+  private String password = "demo";
   private Connection conn;
 
   @Test
