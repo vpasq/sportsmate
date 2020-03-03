@@ -32,7 +32,6 @@ public class CreateTables extends DAO {
       pStatement.execute();
       tablesCreated = "user:";
       System.out.println("table created successfully...");
-//----
 
       sql = "CREATE TABLE IF NOT EXISTS player"
           + "("
@@ -46,7 +45,6 @@ public class CreateTables extends DAO {
       pStatement.execute();
       tablesCreated += "player:";
       System.out.println("table created successfully...");
-//----
 
       sql = "CREATE TABLE IF NOT EXISTS personal_match"
           + "("
