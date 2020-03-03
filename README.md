@@ -13,7 +13,7 @@ chance to let basketball lovers talk in the real world.
 ### Setup the MySQL Database
 ```bash
 1. Install MySQL
-2. Log into MySQL as the root user: (See Handy MySQL Tips below)
+2. Log into MySQL as the root user: (See Handy MySQL Tips Below)
 3. Create a new database user:  CREATE USER 'demo'@'localhost' IDENTIFIED BY 'demo';
 4. Grant access to new database user:  GRANT ALL ON sportsmate.* TO 'demo'@'localhost';
 5. List privileges granted to new database user:  SHOW GRANTS FOR 'demo'@'localhost';  
