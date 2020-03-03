@@ -21,11 +21,13 @@ chance to let basketball lovers talk in the real world.
 ```
 
 ### Handy MySQL Tips and Commands
+```bash
 * In MySQL, by default, the username is root and there is no password.
 * The default password for MySQL under MAMP / MAMP Pro is username: root, password: root. 
 * Log into MySQl as the root user with default password:  mysql -h localhost -u root -p
 * Log into MySQl as the root user using MAMP / MAMP Pro:  mysql -h localhost -u root -proot
 * Drop new user created above: DROP USER 'demo'@'localhost';
+```
 
 
 ### Clone the sportsmate repository and run the project using Maven
