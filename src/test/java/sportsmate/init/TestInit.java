@@ -41,7 +41,7 @@ public class TestInit {
   public void testDropTables() {
     // setup
     DropTables dropTables = new DropTables();
-    String expected = "player:user:";
+    String expected = "player_matches:player:user:";
 
     // exercise
     String actual  = dropTables.getTablesDropped();

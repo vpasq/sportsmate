@@ -16,28 +16,28 @@ public class DropTables extends DAO {
     try {
       conn = getConnection();
 
-//----
-
-      sql = "drop table IF EXISTS player";
-
+      sql = "drop table IF EXISTS personal_match";
       pStatement = conn
           .prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
       pStatement.execute();
-      tablesDropped = "player:";
+      tablesDropped = "player_matches:";
+      System.out.println("Table personal_matches dropped successfully...");
+
+
+      sql = "drop table IF EXISTS player";
+      pStatement = conn
+          .prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+      pStatement.execute();
+      tablesDropped += "player:";
       System.out.println("Table dropped successfully...");
-//----
 
-
-//----
 
       sql = "drop table IF EXISTS user";
-
       pStatement = conn
           .prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
       pStatement.execute();
       tablesDropped += "user:";
       System.out.println("Table dropped successfully...");
-//----
 
     }
     catch (Exception e) {

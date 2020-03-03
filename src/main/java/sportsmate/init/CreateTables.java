@@ -67,8 +67,6 @@ public class CreateTables extends DAO {
       pStatement.execute();
       tablesCreated += "personal_match:";
       System.out.println("table created successfully...");
-
-
     }
     catch (Exception e){
       System.err.printf ("Cannot connect to server%n%s", e);
