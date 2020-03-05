@@ -19,7 +19,6 @@ public class LoggedInUserDAO extends DAO {
     try {
       conn = getConnection();
 
-      //String sql = "select * from user where username=? and password=?";
       String sql = "select id, fname, lname, gender, username"
           + " from user where username=?";
       PreparedStatement pStatement = conn.prepareStatement(sql);

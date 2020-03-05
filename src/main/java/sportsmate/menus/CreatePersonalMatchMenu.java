@@ -17,12 +17,12 @@ public class CreatePersonalMatchMenu extends AbstractMenu {
     String game_type;
     String num_initial_players;
 
-    getPrompt(getLineBreak(27) + "\nCreate a new Personal Match\n\n");
+    getPrompt("\n" + getLineBreak(27) + "\nCreate a new Personal Match\n\n");
 
     getPrompt("Enter the location of the game: ");
     location = getScanner().nextLine();
 
-    getPrompt("Enter the date of the game (example format: 2020-03-01): ");
+    getPrompt("Enter the date of the game (format: mm-dd-yyy): ");
     game_date = getScanner().nextLine();
 
     getPrompt("Enter the start time of the game (example format: 08:00:00): ");

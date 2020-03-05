@@ -10,7 +10,7 @@ public class PlayerDAO extends DAO {
   private Connection conn;
 
   public void createPlayer(String fname, String lname, String gender,
-      String username, String pswd) {
+      String username, String password) {
 
     String sql;
     PreparedStatement pStatement;
@@ -23,7 +23,7 @@ public class PlayerDAO extends DAO {
       pStatement.setString(2, lname);
       pStatement.setString(3, gender);
       pStatement.setString(4, username);
-      pStatement.setString(5, pswd);
+      pStatement.setString(5, password);
       pStatement.executeUpdate();
       System.out.printf("Inserted Row into %s%n", "user table");
 

@@ -1,14 +1,12 @@
 package sportsmate.menus;
 
 import sportsmate.dao.DAO;
-import sportsmate.dao.LoggedInUserDAO;
 import sportsmate.dao.LoginDAO;
 import sportsmate.dao.PersonalMatchDAO;
 import sportsmate.dao.PlayerDAO;
 
 public class MenuController {
   private AbstractMenu menu;
-  private DAO dao;
   private int loggedInUserID;
 
   /**
@@ -28,15 +26,14 @@ public class MenuController {
   }
 
   /**
-   * Helper method checks user menu selection.
+   * Checks user menu selection.
    *
    * @param selectionArr the user input array
    */
   private void checkMenuSelection(String[] selectionArr) {
-    String selection = selectionArr[0];
 
     if (menu instanceof MainMenu) {
-      switch (selection) {
+      switch (selectionArr[0]) {
         case "1":
           setMenu(new RegisterMenu());
           displayMenu();
@@ -54,7 +51,7 @@ public class MenuController {
       }
     }
 
-    if (menu instanceof RegisterMenu) {
+    else if (menu instanceof RegisterMenu) {
       String userFirstName = selectionArr[0];
       String userLastName = selectionArr[1];
       String username = selectionArr[2];
@@ -66,12 +63,12 @@ public class MenuController {
       displayMenu();
     }
 
-    if (menu instanceof LogInMenu) {
+    else if (menu instanceof LogInMenu) {
       String username = selectionArr[0];
-      String pswd = selectionArr[1];
+      String password = selectionArr[1];
       LoginDAO loginDao = new LoginDAO();
-      boolean UserExists = loginDao.authLogin(username, pswd);
-      if (UserExists) {
+      boolean userExists = loginDao.authLogin(username, password);
+      if (userExists) {
         menu.getPrompt("\n" + menu.getLineBreak(username.length(), 39) + "\nHello " + username + ", "
             + "you have succesfully logged in!\n");
         loggedInUserID = loginDao.getLoggedInUserID();
@@ -84,8 +81,8 @@ public class MenuController {
       }
     }
 
-    if (menu instanceof LoginOrExitMenu) {
-      switch (selection) {
+    else if (menu instanceof LoginOrExitMenu) {
+      switch (selectionArr[0]) {
         case "1":
           setMenu(new LogInMenu());
           displayMenu();
@@ -99,13 +96,16 @@ public class MenuController {
       }
     }
 
-    if (menu instanceof PersonalTeamMenu) {
-      switch (selection) {
+    else if (menu instanceof PersonalTeamMenu) {
+      switch (selectionArr[0]) {
         case "1":
           setMenu(new CreatePersonalMatchMenu());
           displayMenu();
           break;
         case "2":
+          setMenu(new JoinPersonalMatchMenu());
+          displayMenu();
+          break;
         case "3":
           System.out.println("\nExiting...\n");
           System.exit(1);
@@ -115,22 +115,13 @@ public class MenuController {
       }
     }
 
-    if (menu instanceof CreatePersonalMatchMenu) {
+    else if (menu instanceof CreatePersonalMatchMenu) {
       String location = selectionArr[0];
       String game_date = selectionArr[1];
       String startAt = selectionArr[2];
       String endAt = selectionArr[3];
       String game_type = selectionArr[4];
       int num_initial_players = Integer.parseInt(selectionArr[5]);
-
-//      System.out.println("loggedInUserID: " + loggedInUserID + "\n");
-//      System.out.println("location: " + location + "\n");
-//      System.out.println("game_date: " + game_date + "\n");
-//      System.out.println("startAt: " + startAt + "\n");
-//      System.out.println("endAt: " + endAt + "\n");
-//      System.out.println("game_type: " + game_type + "\n");
-//      System.out.println("num_current_players: " + num_current_players + "\n");
-
       PersonalMatchDAO personalMatchDAO = new PersonalMatchDAO();
       personalMatchDAO.createPersonalMatch(loggedInUserID, location, game_date, startAt, endAt,
           game_type, num_initial_players);
@@ -138,11 +129,30 @@ public class MenuController {
       displayMenu();
     }
 
+    else if (menu instanceof JoinPersonalMatchMenu) {
+      switch (selectionArr[0]) {
+        case "1":
+          PersonalMatchDAO personalMatchDAO = new PersonalMatchDAO();
+          personalMatchDAO.listAllPersonalMatches(loggedInUserID);
+          //setMenu(new ListPersonalMatches());
+          //displayMenu();
+          break;
+        case "2":
+          //setMenu(new SearchPersonalMatchesByLocation());
+          //displayMenu();
+          break;
+        case "3":
+          System.out.println("\nExiting...\n");
+          System.exit(1);
+          break;
+        default:
+          break;
+      }
+    }
+
   }
 
-
-  private int getLoggedInUserID() {
+  public int getLoggedInUserID() {
     return loggedInUserID;
   }
-
 }

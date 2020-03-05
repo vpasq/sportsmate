@@ -15,8 +15,6 @@ public class LoginDAO extends DAO {
     try {
       conn = getConnection();
       String sql = "select * from user where username=? and password=?";
-//      String sql = "select id, fname, lname, gender, username, password"
-//          + " from user where username=? and password=?";
       PreparedStatement pStatement = conn.prepareStatement(sql);
       pStatement.setString(1, username);
       pStatement.setString(2, password);
@@ -28,7 +26,6 @@ public class LoginDAO extends DAO {
       }
 
       return userExists;
-      //return resultSet.next();
     }
     catch (Exception e){
       System.err.printf ("Cannot connect to server%n%s", e);

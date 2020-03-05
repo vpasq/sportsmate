@@ -25,7 +25,7 @@ public class TestInit {
   public void testCreateTables() {
     // setup
     CreateTables createTables = new CreateTables();
-    String expected = "user:player:personal_match:";
+    String expected = "user:player:personal_match:personal_match_players:";
 
     // exercise
     String actual  = createTables.getTablesCreated();

@@ -1,13 +1,17 @@
 package sportsmate.init;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Date;
+import java.sql.Time;
 import sportsmate.dao.DAO;
+import sportsmate.dao.LoginDAO;
 
 public class CreateTables extends DAO {
   private Connection conn;
+  ResultSet generatedKeys;
   private String tablesCreated;
 
   public CreateTables() {
@@ -24,7 +28,8 @@ public class CreateTables extends DAO {
           + " lname varchar(25) NOT NULL,"
           + " gender varchar(10) NOT NULL,"
           + " username varchar(25) NOT NULL,"
-          + " password varchar(25) NOT NULL"
+          + " password varchar(25) NOT NULL,"
+          + " unique key(username, password)"
           + ")";
 
       pStatement = conn
@@ -65,6 +70,221 @@ public class CreateTables extends DAO {
       pStatement.execute();
       tablesCreated += "personal_match:";
       System.out.println("table created successfully...");
+
+      sql = "CREATE TABLE IF NOT EXISTS personal_match_players"
+          + "("
+          + " p_id integer,"
+          + " match_id integer,"
+          + " primary key (p_id, match_id)"
+          + ")";
+
+      pStatement = conn
+          .prepareStatement(sql);
+      pStatement.execute();
+      tablesCreated += "personal_match_players:";
+      System.out.println("table created successfully...");
+
+// =============== START INSERT DATA  =====================================================
+      LoginDAO loginDao = new LoginDAO();
+      boolean userExists;
+
+      userExists = loginDao.authLogin("sally", "test");
+      if (!userExists) {
+        sql = "INSERT INTO user VALUES (default, ?,?,?,?,?)";
+        pStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        pStatement.setString(1, "Sally");
+        pStatement.setString(2, "Blake");
+        pStatement.setString(3, "female");
+        pStatement.setString(4, "sally");
+        pStatement.setString(5, "test");
+        pStatement.executeUpdate();
+        System.out.printf("Inserted Row into %s%n", "user table");
+
+        ResultSet generatedKeys = pStatement.getGeneratedKeys();
+        generatedKeys.next();
+
+        sql = "insert into player VALUES (default, ?)";
+        pStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        pStatement.setString(1, Integer.toString(generatedKeys.getInt(1)));
+        pStatement.execute();
+        System.out.printf("Inserted Row into %s%n", "player table");
+      }
+
+      userExists = loginDao.authLogin("lucy", "test");
+      if (!userExists) {
+        sql = "INSERT INTO user VALUES (default, ?,?,?,?,?)";
+        pStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        pStatement.setString(1, "Lucy");
+        pStatement.setString(2, "Treston");
+        pStatement.setString(3, "female");
+        pStatement.setString(4, "lucy");
+        pStatement.setString(5, "test");
+        pStatement.executeUpdate();
+        System.out.printf("Inserted Row into %s%n", "user table");
+
+        ResultSet generatedKeys = pStatement.getGeneratedKeys();
+        generatedKeys.next();
+
+        sql = "insert into player VALUES (default, ?)";
+        pStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        pStatement.setString(1, Integer.toString(generatedKeys.getInt(1)));
+        pStatement.execute();
+        System.out.printf("Inserted Row into %s%n", "player table");
+      }
+
+      userExists = loginDao.authLogin("john", "test");
+      if (!userExists) {
+        sql = "INSERT INTO user VALUES (default, ?,?,?,?,?)";
+        pStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        pStatement.setString(1, "John");
+        pStatement.setString(2, "Smith");
+        pStatement.setString(3, "male");
+        pStatement.setString(4, "john");
+        pStatement.setString(5, "test");
+        pStatement.executeUpdate();
+        System.out.printf("Inserted Row into %s%n", "user table");
+
+        ResultSet generatedKeys = pStatement.getGeneratedKeys();
+        generatedKeys.next();
+
+        sql = "insert into player VALUES (default, ?)";
+        pStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        pStatement.setString(1, Integer.toString(generatedKeys.getInt(1)));
+        pStatement.execute();
+        System.out.printf("Inserted Row into %s%n", "player table");
+      }
+
+      userExists = loginDao.authLogin("derik", "test");
+      if (!userExists) {
+        sql = "INSERT INTO user VALUES (default, ?,?,?,?,?)";
+        pStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        pStatement.setString(1, "Derick");
+        pStatement.setString(2, "Dhamer");
+        pStatement.setString(3, "male");
+        pStatement.setString(4, "derick");
+        pStatement.setString(5, "test");
+        pStatement.executeUpdate();
+        System.out.printf("Inserted Row into %s%n", "user table");
+
+        ResultSet generatedKeys = pStatement.getGeneratedKeys();
+        generatedKeys.next();
+
+        sql = "insert into player VALUES (default, ?)";
+        pStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        pStatement.setString(1, Integer.toString(generatedKeys.getInt(1)));
+        pStatement.execute();
+        System.out.printf("Inserted Row into %s%n", "player table");
+      }
+
+      userExists = loginDao.authLogin("jerry", "test");
+      if (!userExists) {
+        sql = "INSERT INTO user VALUES (default, ?,?,?,?,?)";
+        pStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        pStatement.setString(1, "Jerry");
+        pStatement.setString(2, "Dallen");
+        pStatement.setString(3, "male");
+        pStatement.setString(4, "jerry");
+        pStatement.setString(5, "test");
+        pStatement.executeUpdate();
+        System.out.printf("Inserted Row into %s%n", "user table");
+
+        ResultSet generatedKeys = pStatement.getGeneratedKeys();
+        generatedKeys.next();
+
+        sql = "insert into player VALUES (default, ?)";
+        pStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        pStatement.setString(1, Integer.toString(generatedKeys.getInt(1)));
+        pStatement.execute();
+      }
+
+
+      ResultSet resultSet;
+      sql = "select * from personal_match where player_id=? and location=? and game_date=?"
+          + "and start_at=? and end_at=? and game_type=? and num_initial_players=? and num_players_joined=?";
+      pStatement = conn.prepareStatement(sql);
+      pStatement.setString(1, "1");
+      pStatement.setString(2, "Boston");
+      pStatement.setDate(3, Date.valueOf("2020-09-04"));
+      pStatement.setTime(4, Time.valueOf("09:00:00"));
+      pStatement.setTime(5, Time.valueOf("11:00:00"));
+      pStatement.setString(6, "1");
+      pStatement.setInt(7, 1 );
+      pStatement.setInt(8, 0 );
+      resultSet = pStatement.executeQuery();
+
+      if (!resultSet.next()) {
+        sql = "INSERT INTO personal_match VALUES (default, ?,?,?,?,?,?,?,?)";
+        pStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        pStatement.setInt(1, 1);
+        pStatement.setString(2, "Boston");
+        pStatement.setDate(3, Date.valueOf("2020-09-04"));
+        pStatement.setTime(4, Time.valueOf("09:00:00"));
+        pStatement.setTime(5, Time.valueOf("11:00:00"));
+        pStatement.setString(6, "1");
+        pStatement.setInt(7, 1);
+        pStatement.setInt(8, 0);
+        pStatement.executeUpdate();
+        System.out.println("\nYou have successfully created a personal match!");
+      }
+
+      sql = "select * from personal_match where player_id=? and location=? and game_date=?"
+          + "and start_at=? and end_at=? and game_type=? and num_initial_players=? and num_players_joined=?";
+      pStatement = conn.prepareStatement(sql);
+      pStatement.setString(1, "2");
+      pStatement.setString(2, "Cambridge");
+      pStatement.setDate(3, Date.valueOf("2020-10-10"));
+      pStatement.setTime(4, Time.valueOf("09:00:00"));
+      pStatement.setTime(5, Time.valueOf("11:00:00"));
+      pStatement.setString(6, "3");
+      pStatement.setInt(7, 3 );
+      pStatement.setInt(8, 0 );
+      resultSet = pStatement.executeQuery();
+
+      if (!resultSet.next()) {
+        sql = "INSERT INTO personal_match VALUES (default, ?,?,?,?,?,?,?,?)";
+        pStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        pStatement.setInt(1, 2);
+        pStatement.setString(2, "Cambridge");
+        pStatement.setDate(3, Date.valueOf("2020-10-10"));
+        pStatement.setTime(4, Time.valueOf("09:00:00"));
+        pStatement.setTime(5, Time.valueOf("11:00:00"));
+        pStatement.setString(6, "3");
+        pStatement.setInt(7, 3);
+        pStatement.setInt(8, 0);
+        pStatement.executeUpdate();
+        System.out.println("\nYou have successfully created a personal match!");
+      }
+
+      sql = "select * from personal_match where player_id=? and location=? and game_date=?"
+          + "and start_at=? and end_at=? and game_type=? and num_initial_players=? and num_players_joined=?";
+      pStatement = conn.prepareStatement(sql);
+      pStatement.setInt(1, 2);
+      pStatement.setString(2, "Beverly");
+      pStatement.setDate(3, Date.valueOf("2020-03-22"));
+      pStatement.setTime(4, Time.valueOf("08:00:00"));
+      pStatement.setTime(5, Time.valueOf("11:00:00"));
+      pStatement.setString(6, "3");
+      pStatement.setInt(7, 3);
+      pStatement.setInt(8, 0);
+      resultSet = pStatement.executeQuery();
+
+      if (!resultSet.next()) {
+        sql = "INSERT INTO personal_match VALUES (default, ?,?,?,?,?,?,?,?)";
+        pStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        pStatement.setInt(1, 2);
+        pStatement.setString(2, "Beverly");
+        pStatement.setDate(3, Date.valueOf("2020-03-22"));
+        pStatement.setTime(4, Time.valueOf("08:00:00"));
+        pStatement.setTime(5, Time.valueOf("11:00:00"));
+        pStatement.setString(6, "3");
+        pStatement.setInt(7, 3);
+        pStatement.setInt(8, 0);
+        pStatement.executeUpdate();
+        System.out.println("\nYou have successfully created a personal match!");
+      }
+
+// =============== END INSERT DATA  =====================================================
+
     }
     catch (Exception e){
       System.err.printf ("Cannot connect to server%n%s", e);
