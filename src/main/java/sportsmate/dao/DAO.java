@@ -12,8 +12,8 @@ public class DAO {
     //String url = "jdbc:mysql://localhost:3306/sportsmate";
     //String url = "jdbc:mysql://localhost/sportsmate";
     String url = "jdbc:mysql://localhost/sportsmate?serverTimezone=UTC#";
-    String username = "vpasq";
-    String password = "test";
+    String username = "demo";
+    String password = "demo";
 
     try  {
         return DriverManager.getConnection(url, username, password);
