@@ -10,7 +10,8 @@ public class DAO {
 
   public Connection getConnection() {
     //String url = "jdbc:mysql://localhost:3306/sportsmate";
-    String url = "jdbc:mysql://localhost/sportsmate";
+    //String url = "jdbc:mysql://localhost/sportsmate";
+    String url = "jdbc:mysql://localhost/?serverTimezone=UTC#";
     String username = "vpasq";
     String password = "test";
 
