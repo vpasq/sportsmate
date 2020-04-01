@@ -21,6 +21,36 @@ public class CreateTables extends DAO {
     try {
       conn = getConnection();
 
+
+      sql = "CREATE TABLE IF NOT EXISTS team"
+          + "("
+          + " team_id integer primary key auto_increment,"
+          + " team_name varchar(25) NOT NULL,"
+          + " admin_id integer NOT NULL"
+          + ")";
+
+      pStatement = conn
+          .prepareStatement(sql);
+      pStatement.execute();
+      tablesCreated += "player:";
+      System.out.println("table created successfully...");
+
+
+      sql = "CREATE TABLE IF NOT EXISTS team_match"
+          + "("
+          + " tmatch_id integer primary key auto_increment,"
+          + " host_id integer NOT NULL,"
+          + " guest_id integer NOT NULL,"
+          + " foreign key (host_id) references team(team_id),"
+          + " foreign key (guest_id) references team(team_id)"
+          + ")";
+
+      pStatement = conn
+          .prepareStatement(sql);
+      pStatement.execute();
+      tablesCreated += "player:";
+      System.out.println("table created successfully...");
+
       sql = "CREATE TABLE IF NOT EXISTS user"
           + "("
           + " id integer primary key auto_increment,"
@@ -42,7 +72,9 @@ public class CreateTables extends DAO {
           + "("
           + " pid integer primary key auto_increment,"
           + " user_id integer NOT NULL,"
-          + " foreign key (user_id) references user(id)"
+          + " t_id integer,"
+          + " foreign key (user_id) references user(id),"
+          + " foreign key (t_id) references team(team_id)"
           + ")";
 
       pStatement = conn
@@ -84,6 +116,11 @@ public class CreateTables extends DAO {
       tablesCreated += "personal_match_players:";
       System.out.println("table created successfully...");
 
+
+
+
+
+
 // =============== START INSERT DATA  =====================================================
       LoginDAO loginDao = new LoginDAO();
       boolean userExists;
@@ -103,9 +140,10 @@ public class CreateTables extends DAO {
         ResultSet generatedKeys = pStatement.getGeneratedKeys();
         generatedKeys.next();
 
-        sql = "insert into player VALUES (default, ?)";
+        sql = "insert into player VALUES (default, ?, ?)";
         pStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         pStatement.setString(1, Integer.toString(generatedKeys.getInt(1)));
+        pStatement.setString(2, null);
         pStatement.execute();
         System.out.printf("Inserted Row into %s%n", "player table");
       }
@@ -125,9 +163,10 @@ public class CreateTables extends DAO {
         ResultSet generatedKeys = pStatement.getGeneratedKeys();
         generatedKeys.next();
 
-        sql = "insert into player VALUES (default, ?)";
+        sql = "insert into player VALUES (default, ?, ?)";
         pStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         pStatement.setString(1, Integer.toString(generatedKeys.getInt(1)));
+        pStatement.setString(2, null);
         pStatement.execute();
         System.out.printf("Inserted Row into %s%n", "player table");
       }
@@ -147,9 +186,10 @@ public class CreateTables extends DAO {
         ResultSet generatedKeys = pStatement.getGeneratedKeys();
         generatedKeys.next();
 
-        sql = "insert into player VALUES (default, ?)";
+        sql = "insert into player VALUES (default, ?, ?)";
         pStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         pStatement.setString(1, Integer.toString(generatedKeys.getInt(1)));
+        pStatement.setString(2, null);
         pStatement.execute();
         System.out.printf("Inserted Row into %s%n", "player table");
       }
@@ -169,9 +209,10 @@ public class CreateTables extends DAO {
         ResultSet generatedKeys = pStatement.getGeneratedKeys();
         generatedKeys.next();
 
-        sql = "insert into player VALUES (default, ?)";
+        sql = "insert into player VALUES (default, ?, ?)";
         pStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         pStatement.setString(1, Integer.toString(generatedKeys.getInt(1)));
+        pStatement.setString(2, null);
         pStatement.execute();
         System.out.printf("Inserted Row into %s%n", "player table");
       }
@@ -191,9 +232,10 @@ public class CreateTables extends DAO {
         ResultSet generatedKeys = pStatement.getGeneratedKeys();
         generatedKeys.next();
 
-        sql = "insert into player VALUES (default, ?)";
+        sql = "insert into player VALUES (default, ?, ?)";
         pStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         pStatement.setString(1, Integer.toString(generatedKeys.getInt(1)));
+        pStatement.setString(2, null);
         pStatement.execute();
       }
 

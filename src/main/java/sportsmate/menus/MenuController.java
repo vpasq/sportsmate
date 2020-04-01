@@ -72,13 +72,33 @@ public class MenuController {
         menu.getPrompt("\n" + menu.getLineBreak(username.length(), 39) + "\nHello " + username + ", "
             + "you have succesfully logged in!\n");
         loggedInUserID = loginDao.getLoggedInUserID();
-        setMenu(new PersonalTeamMenu());
+        setMenu(new MainSubMenu());
         displayMenu();
       } else {
         menu.getPrompt("\n" + menu.getLineBreak(40) + "\nUsername and/or Password Does Not Exist!\n");
         System.out.println("\nExiting...\n");
         System.exit(1);
       }
+    }
+
+    // added by vp
+    else if (menu instanceof MainSubMenu) {
+      switch (selectionArr[0]) {
+        case "1":
+          setMenu(new PersonalTeamMenu());
+          displayMenu();
+          break;
+        case "2":
+          setMenu(new TeamMatchMenu());
+          displayMenu();
+          break;
+        case "3":
+          System.out.println("\nExiting...\n");
+          System.exit(1);
+          break;
+        default:
+          break;
+        }
     }
 
     else if (menu instanceof LoginOrExitMenu) {
@@ -107,6 +127,16 @@ public class MenuController {
           displayMenu();
           break;
         case "3":
+          PersonalMatchDAO personalMatchDAO = new PersonalMatchDAO();
+          personalMatchDAO.showPersonalMatchesJoined(loggedInUserID);
+          setMenu(new PersonalTeamMenu());
+          displayMenu();
+          break;
+        case "4":
+          setMenu(new MainSubMenu());
+          displayMenu();
+          break;
+        case "5":
           System.out.println("\nExiting...\n");
           System.exit(1);
           break;
@@ -134,14 +164,45 @@ public class MenuController {
         case "1":
           PersonalMatchDAO personalMatchDAO = new PersonalMatchDAO();
           personalMatchDAO.listAllPersonalMatches(loggedInUserID);
-          //setMenu(new ListPersonalMatches());
-          //displayMenu();
+          setMenu(new MainSubMenu());
+          displayMenu();
           break;
         case "2":
           //setMenu(new SearchPersonalMatchesByLocation());
           //displayMenu();
           break;
         case "3":
+          System.out.println("\nExiting...\n");
+          System.exit(1);
+          break;
+        default:
+          break;
+      }
+    }
+
+
+    else if (menu instanceof TeamMatchMenu) {
+      switch (selectionArr[0]) {
+        case "1":
+
+          //setMenu(new CreateTeam());
+          displayMenu();
+          break;
+        case "2":
+          //setMenu(new JoinTeam());
+          displayMenu();
+          break;
+        case "3":
+          PersonalMatchDAO personalMatchDAO = new PersonalMatchDAO();
+          personalMatchDAO.showPersonalMatchesJoined(loggedInUserID);
+          setMenu(new PersonalTeamMenu());
+          displayMenu();
+          break;
+        case "4":
+          setMenu(new MainSubMenu());
+          displayMenu();
+          break;
+        case "5":
           System.out.println("\nExiting...\n");
           System.exit(1);
           break;

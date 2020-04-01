@@ -22,7 +22,7 @@ public class CreatePersonalMatchMenu extends AbstractMenu {
     getPrompt("Enter the location of the game: ");
     location = getScanner().nextLine();
 
-    getPrompt("Enter the date of the game (format: mm-dd-yyy): ");
+    getPrompt("Enter the date of the game (format: mm-dd-yyyy): ");
     game_date = getScanner().nextLine();
 
     getPrompt("Enter the start time of the game (example format: 08:00:00): ");
