@@ -6,6 +6,8 @@ import sportsmate.dao.PersonalMatchDAO;
 import sportsmate.dao.PlayerDAO;
 import sportsmate.dao.TeamMatchDAO;
 
+import java.text.ParseException;
+
 public class MenuController {
   private AbstractMenu menu;
   private int loggedInUserID;
@@ -161,16 +163,18 @@ public class MenuController {
     }
 
     else if (menu instanceof JoinPersonalMatchMenu) {
+      PersonalMatchDAO personalMatchDAO = new PersonalMatchDAO();
       switch (selectionArr[0]) {
         case "1":
-          PersonalMatchDAO personalMatchDAO = new PersonalMatchDAO();
           personalMatchDAO.listAllPersonalMatches(loggedInUserID);
           setMenu(new MainSubMenu());
           displayMenu();
           break;
         case "2":
+          setMenu(new SearchFilteredMatchMenu());
+          //personalMatchDAO.listFilteredPersonalMatches(loggedInUserID);
           //setMenu(new SearchPersonalMatchesByLocation());
-          //displayMenu();
+          displayMenu();
           break;
         case "3":
           System.out.println("\nExiting...\n");
@@ -179,6 +183,29 @@ public class MenuController {
         default:
           break;
       }
+    }
+
+    /*
+    Function: listFilteredPersonalMatches
+    Editor: Xiongbo Hu
+    Date: 20200327
+    */
+    else if (menu instanceof SearchFilteredMatchMenu) {
+      String matchID = selectionArr[0];
+      String location = selectionArr[1];
+      String date = selectionArr[2];
+      String gameType = selectionArr[3];
+      String playersLeft = selectionArr[4];
+      //int num_initial_players = Integer.parseInt(selectionArr[5]);
+      PersonalMatchDAO personalMatchDAO = new PersonalMatchDAO();
+      try {
+        personalMatchDAO.listFilteredPersonalMatches(loggedInUserID, matchID, location, date, gameType,
+                playersLeft);
+      } catch (ParseException e) {
+        e.printStackTrace();
+      }
+      setMenu(new PersonalTeamMenu());
+      displayMenu();
     }
 
     else if (menu instanceof TeamMatchMenu) {
@@ -254,8 +281,6 @@ public class MenuController {
       setMenu(new TeamMatchMenu());
       displayMenu();
     }
-
-
 
   }
 
