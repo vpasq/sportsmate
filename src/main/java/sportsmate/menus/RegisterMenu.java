@@ -2,6 +2,7 @@ package sportsmate.menus;
 
 import java.io.Console;
 import java.util.Arrays;
+import sportsmate.utilty.check;
 
 public class RegisterMenu extends AbstractMenu {
 
@@ -18,12 +19,36 @@ public class RegisterMenu extends AbstractMenu {
 
     getPrompt("Enter your first name: ");
     userFirstName = getScanner().nextLine();
+    //check first name use function in check class
+    // created by zhengkang fan
+    boolean check_first_name = check.isSpecialChar(userFirstName)||check.isNumberChar(userFirstName);
+    while (check_first_name){
+      getPrompt("You entered a null value or included special charater(s) or number(s)! \n\nPlease enter your first name again:");
+      userFirstName = getScanner().nextLine();
+      check_first_name = check.isSpecialChar(userFirstName)||check.isNumberChar(userFirstName);
+    }
 
     getPrompt("Enter your last name: ");
     userLastName = getScanner().nextLine();
+    //check last name use function in check class
+    // created by zhengkang fan
+    boolean check_last_name = check.isSpecialChar(userLastName)||check.isNumberChar(userLastName);
+    while (check_last_name){
+      getPrompt(" You entered a null value or included special charater(s) or number(s)! \n\nPlease enter your last name again:");
+      userLastName = getScanner().nextLine();
+      check_last_name = check.isSpecialChar(userLastName)||check.isNumberChar(userLastName);
+    }
 
-    getPrompt("Enter your gender: ");
+    getPrompt("Enter your gender(eg: female, male, secret): ");
     userGender = getScanner().nextLine();
+    //check gender use function in check class
+    // created by zhengkang fan
+    boolean check_gender = check.isgenderChar(userGender);
+    while (check_gender == false){
+      getPrompt("You entered a null value! \n\nPlease enter your gender again:");
+      userGender = getScanner().nextLine();
+      check_gender = check.isgenderChar(userGender);
+    }
 
     Console console = System.console();
     if (console == null) {
@@ -32,6 +57,14 @@ public class RegisterMenu extends AbstractMenu {
     }
 
     String username = console.readLine("Enter a username: ");
+    //check username use function in check class
+    // created by zhengkang fan
+    boolean check_username = check.isSpecialChar(username);
+    while (check_username){
+      getPrompt("You entered a null value or included special charater(s)！\n\nPlease enter your username again:");
+      username = getScanner().nextLine();
+      check_username = check.isSpecialChar(username);
+    }
 
     char[] passwordArray = console.readPassword("Enter your secret password: ");
 

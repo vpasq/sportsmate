@@ -234,8 +234,12 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<version>8.0.19</version>
 		</dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-core</artifactId>
+        </dependency>
 
-		<!--		commented out: vp-->
+        <!--		commented out: vp-->
 <!--		<dependency>-->
 <!--			<groupId>log4j</groupId>-->
 <!--			<artifactId>log4j</artifactId>-->
