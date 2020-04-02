@@ -96,10 +96,7 @@ public class PersonalMatchDAO extends DAO {
         System.out.printf("%-11s%-14s%-11s%-13s%-13s%-11s%-12s%-18s%-19s%n",
             pmatch_id, player_id, location, game_date, start_at, end_at, game_type,
             num_initial_players, num_players_joined);
-
-
       }
-
 
       joinPersonalMatch(loggedInUserID);
 
@@ -133,33 +130,29 @@ public class PersonalMatchDAO extends DAO {
     Boolean andFlag = false;
     Boolean foundFlag = false;
     String sql = "select * from personal_match";
-    if(matchID.length() > 0) {
+    if (matchID.length() > 0) {
       sql += " where pmatch_id = ";
       sql += matchID;
       andFlag = true;
     }
-    if(location.length() > 0)
-    {
-      if(andFlag == true) {
+    if (location.length() > 0) {
+      if (andFlag == true) {
         sql += " and location = \"";
-      }
-      else {
+      } else {
         sql += " where location = \"";
       }
       sql = sql + location + "\"";
       andFlag = true;
     }
-    if(date.length() > 0)
-    {
+    if (date.length() > 0) {
       try {
         //SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
         //sdf.setTimeZone(TimeZone.getTimeZone("EST"));
         //java.util.Date gameDate = sdf.parse(date);
         //java.sql.Timestamp sqlDate = new java.sql.Timestamp(gameDate.getTime());
-        if(andFlag == true) {
+        if (andFlag == true) {
           sql += " and game_date > ";
-        }
-        else {
+        } else {
           sql += " where game_date > ";
         }
         //sql += gameDate.toString();
@@ -169,23 +162,19 @@ public class PersonalMatchDAO extends DAO {
         System.out.printf("Date formation error.\n\n");
       }
     }
-    if(gameType.length() > 0)
-    {
-      if(andFlag == true) {
+    if (gameType.length() > 0) {
+      if (andFlag == true) {
         sql += " and game_type = ";
-      }
-      else {
+      } else {
         sql += " where game_type = ";
       }
       sql += gameType;
       andFlag = true;
     }
-    if(playersLeft.length() > 0)
-    {
-      if(andFlag == true) {
+    if (playersLeft.length() > 0) {
+      if (andFlag == true) {
         sql += " and num_initial_players * 2 - num_players_joined = ";
-      }
-      else {
+      } else {
         sql += " where num_initial_players * 2 - num_players_joined = ";
       }
       sql += playersLeft;
@@ -203,6 +192,7 @@ public class PersonalMatchDAO extends DAO {
               "Initial Players", "Players Joined");
       while (resultSet.next()) {
         foundFlag = true;
+
         pmatch_id = resultSet.getInt("pmatch_id");
         player_id = resultSet.getInt("player_id");
         location = resultSet.getString("location");
@@ -217,15 +207,66 @@ public class PersonalMatchDAO extends DAO {
                 pmatch_id, player_id, location, game_date, start_at, end_at, game_type,
                 num_initial_players, num_players_joined);
       }
-      if(foundFlag == false)
-      {
+      if (foundFlag == false) {
         System.out.printf("No Records\n\n");
       }
-    }catch (Exception e){
+    } catch (Exception e) {
+      System.err.printf("Cannot connect to server%n%s", e);
+
+    }
+  }
+
+  public void listPersonalMatchesJoined(int loggedInUserID) {
+
+    try {
+      conn = getConnection();
+
+      String sql = "select pmatch_id, player_id, location, game_date, start_at, end_at,"
+              + "game_type, num_initial_players, num_players_joined "
+              + "from player p, personal_match pm, personal_match_players pmp "
+              + "where p.user_id=? "
+              + "and p.pid = pmp.p_id "
+              + "and pmp.match_id = pm.pmatch_id";
+
+      //System.out.println("logged in user: " + loggedInUserID);
+      PreparedStatement pStatement = conn.prepareStatement(sql);
+      pStatement.setInt(1, loggedInUserID);
+      ResultSet resultSet = pStatement.executeQuery();
+
+      getPrompt("\n" + getLineBreak(57) + "\nBelow is a of list Personal Matches "
+              + "that you have joined:\n");
+      System.out.printf("%n%-11s%-14s%-11s%-13s%-13s%-11s%-12s%-18s%-19s%n",
+              "Match ID", "Listed by ID", "Location", "Date", "Start Time", "End Time", "Game Type",
+              "Initial Players", "Players Joined");
+
+      while (resultSet.next()) {
+        pmatch_id = resultSet.getInt("pmatch_id");
+        player_id = resultSet.getInt("player_id");
+        location = resultSet.getString("location");
+        game_date = resultSet.getDate("game_date");
+        start_at = resultSet.getTime("start_at");
+        end_at = resultSet.getTime("end_at");
+        game_type = resultSet.getInt("game_type");
+        num_initial_players = resultSet.getInt("num_initial_players");
+        num_players_joined = resultSet.getInt("num_players_joined");
+
+        System.out.printf("%-11s%-14s%-11s%-13s%-13s%-11s%-12s%-18s%-19s%n",
+                pmatch_id, player_id, location, game_date, start_at, end_at, game_type,
+                num_initial_players, num_players_joined);
+      }
+
+    } catch (Exception e) {
+      System.err.printf("Cannot connect to server%n%s", e);
       System.err.println(e.getMessage());
       e.printStackTrace();
     }
 
+    if (conn != null) {
+      try {
+        conn.close();
+        //System.out.println("Disconnected from database.");
+      } catch (Exception e) { /* ignore close errors */ }
+    }
   }
 
   public void joinPersonalMatch(int p_id) {
@@ -245,7 +286,12 @@ public class PersonalMatchDAO extends DAO {
       pStatement.setInt(2, match_id );
       pStatement.executeUpdate();
       System.out.println("\nYou have successfully joined a personal match!");
-      System.exit(1);
+
+      sql = "UPDATE personal_match SET num_players_joined = num_players_joined + 1 "
+          + "where pmatch_id= ?";
+      pStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+      pStatement.setInt(1, match_id);
+      pStatement.executeUpdate();
 
     }
     catch (Exception e){
@@ -267,6 +313,29 @@ public class PersonalMatchDAO extends DAO {
 
 
   public void searchPersonalMatchesByLocation() {}
+
+  /**
+   * Concatenates set number of characters for line break.
+   *
+   * @param num the number of characters in the line break
+   * @return a line break with a set number of characters
+   */
+  protected String getLineBreak(int num) {
+    String lineBreak = "";
+    for (int i = 0; i < num; i++) {
+      lineBreak += "=";
+    }
+    return lineBreak;
+  }
+
+  /**
+   * User prompt.
+   *
+   * @param str string to prompt user
+   */
+  protected void getPrompt(String str) {
+    System.out.print(str);
+  }
 
 
 }

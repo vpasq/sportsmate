@@ -4,6 +4,7 @@ import sportsmate.dao.DAO;
 import sportsmate.dao.LoginDAO;
 import sportsmate.dao.PersonalMatchDAO;
 import sportsmate.dao.PlayerDAO;
+import sportsmate.dao.TeamMatchDAO;
 
 import java.text.ParseException;
 
@@ -74,13 +75,33 @@ public class MenuController {
         menu.getPrompt("\n" + menu.getLineBreak(username.length(), 39) + "\nHello " + username + ", "
             + "you have succesfully logged in!\n");
         loggedInUserID = loginDao.getLoggedInUserID();
-        setMenu(new PersonalTeamMenu());
+        setMenu(new MainSubMenu());
         displayMenu();
       } else {
         menu.getPrompt("\n" + menu.getLineBreak(40) + "\nUsername and/or Password Does Not Exist!\n");
         System.out.println("\nExiting...\n");
         System.exit(1);
       }
+    }
+
+    // added by vp
+    else if (menu instanceof MainSubMenu) {
+      switch (selectionArr[0]) {
+        case "1":
+          setMenu(new PersonalTeamMenu());
+          displayMenu();
+          break;
+        case "2":
+          setMenu(new TeamMatchMenu());
+          displayMenu();
+          break;
+        case "3":
+          System.out.println("\nExiting...\n");
+          System.exit(1);
+          break;
+        default:
+          break;
+        }
     }
 
     else if (menu instanceof LoginOrExitMenu) {
@@ -109,6 +130,16 @@ public class MenuController {
           displayMenu();
           break;
         case "3":
+          PersonalMatchDAO personalMatchDAO = new PersonalMatchDAO();
+          personalMatchDAO.listPersonalMatchesJoined(loggedInUserID);
+          setMenu(new PersonalTeamMenu());
+          displayMenu();
+          break;
+        case "4":
+          setMenu(new MainSubMenu());
+          displayMenu();
+          break;
+        case "5":
           System.out.println("\nExiting...\n");
           System.exit(1);
           break;
@@ -136,8 +167,8 @@ public class MenuController {
       switch (selectionArr[0]) {
         case "1":
           personalMatchDAO.listAllPersonalMatches(loggedInUserID);
-          //setMenu(new ListPersonalMatches());
-          //displayMenu();
+          setMenu(new MainSubMenu());
+          displayMenu();
           break;
         case "2":
           setMenu(new SearchFilteredMatchMenu());
@@ -174,6 +205,80 @@ public class MenuController {
         e.printStackTrace();
       }
       setMenu(new PersonalTeamMenu());
+      displayMenu();
+    }
+
+    else if (menu instanceof TeamMatchMenu) {
+      TeamMatchDAO teamMatchDAO;
+      switch (selectionArr[0]) {
+        case "1":
+          setMenu(new CreateTeamMenu());
+          displayMenu();
+          break;
+        case "2":
+          setMenu(new JoinTeamMenu());
+          displayMenu();
+          break;
+        case "3":
+          setMenu(new LeaveTeamMenu());
+          displayMenu();
+          break;
+        case "4":
+          teamMatchDAO = new TeamMatchDAO();
+          teamMatchDAO.listTeamsCreated(loggedInUserID);
+          setMenu(new TeamMatchMenu());
+          displayMenu();
+          break;
+        case "5":
+          teamMatchDAO = new TeamMatchDAO();
+          teamMatchDAO.listTeamsJoined(loggedInUserID);
+          setMenu(new TeamMatchMenu());
+          displayMenu();
+          break;
+        case "6":
+          teamMatchDAO = new TeamMatchDAO();
+          teamMatchDAO.listAllTeams();
+          setMenu(new TeamMatchMenu());
+          displayMenu();
+          break;
+        case "7":
+          setMenu(new MainSubMenu());
+          displayMenu();
+          break;
+        case "8":
+          System.out.println("\nExiting...\n");
+          System.exit(1);
+          break;
+        default:
+          break;
+      }
+    }
+
+    else if (menu instanceof CreateTeamMenu) {
+      String teamName = selectionArr[0];
+      TeamMatchDAO teamMatchDAO = new TeamMatchDAO();
+      teamMatchDAO.createTeam(teamName, loggedInUserID);
+      setMenu(new TeamMatchMenu());
+      displayMenu();
+    }
+
+    else if (menu instanceof JoinTeamMenu) {
+      String teamID = selectionArr[0];
+      TeamMatchDAO teamMatchDAO = new TeamMatchDAO();
+      teamMatchDAO.joinTeam(teamID, loggedInUserID);
+      setMenu(new TeamMatchMenu());
+      displayMenu();
+    }
+
+    else if (menu instanceof LeaveTeamMenu) {
+      //String teamID = selectionArr[0];
+      int t_id = Integer.parseInt(selectionArr[0]);
+      int tmplayer_id = loggedInUserID;
+      //System.out.println("lll" + t_id);
+      //System.out.println("bbb" + tmplayer_id);
+      TeamMatchDAO teamMatchDAO = new TeamMatchDAO();
+      teamMatchDAO.leaveTeam(tmplayer_id, t_id);
+      setMenu(new TeamMatchMenu());
       displayMenu();
     }
 

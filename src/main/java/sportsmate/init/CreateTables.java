@@ -21,6 +21,9 @@ public class CreateTables extends DAO {
     try {
       conn = getConnection();
 
+
+
+
       sql = "CREATE TABLE IF NOT EXISTS user"
           + "("
           + " id integer primary key auto_increment,"
@@ -35,7 +38,7 @@ public class CreateTables extends DAO {
       pStatement = conn
           .prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
       pStatement.execute();
-      tablesCreated = "user:";
+      tablesCreated += "user:";
       System.out.println("table created successfully...");
 
       sql = "CREATE TABLE IF NOT EXISTS player"
@@ -50,6 +53,53 @@ public class CreateTables extends DAO {
       pStatement.execute();
       tablesCreated += "player:";
       System.out.println("table created successfully...");
+
+
+      sql = "CREATE TABLE IF NOT EXISTS team"
+          + "("
+          + " team_id integer primary key auto_increment,"
+          + " team_name varchar(25) NOT NULL,"
+          + " admin_id integer NOT NULL,"
+          + " foreign key (admin_id) references player(pid)"
+          + ")";
+
+      pStatement = conn
+          .prepareStatement(sql);
+      pStatement.execute();
+      tablesCreated = "team:";
+      System.out.println("table created successfully...");
+
+
+      sql = "CREATE TABLE IF NOT EXISTS team_match"
+          + "("
+          + " match_id integer primary key auto_increment,"
+          + " host_id integer NOT NULL,"
+          + " guest_id integer NOT NULL,"
+          + " foreign key (host_id) references team(team_id),"
+          + " foreign key (guest_id) references team(team_id)"
+          + ")";
+
+      pStatement = conn
+          .prepareStatement(sql);
+      pStatement.execute();
+      tablesCreated += "team_match:";
+      System.out.println("table created successfully...");
+
+
+      sql = "CREATE TABLE IF NOT EXISTS team_match_players"
+          + "("
+          + " tmplayer_id integer,"
+          + " t_id integer,"
+          + " primary key (tmplayer_id, t_id)"
+          + ")";
+
+      pStatement = conn
+          .prepareStatement(sql);
+      pStatement.execute();
+      tablesCreated += "team_match:";
+      System.out.println("table created successfully...");
+
+
 
       sql = "CREATE TABLE IF NOT EXISTS personal_match"
           + "("
@@ -83,6 +133,11 @@ public class CreateTables extends DAO {
       pStatement.execute();
       tablesCreated += "personal_match_players:";
       System.out.println("table created successfully...");
+
+
+
+
+
 
 // =============== START INSERT DATA  =====================================================
       LoginDAO loginDao = new LoginDAO();
@@ -282,6 +337,7 @@ public class CreateTables extends DAO {
         pStatement.executeUpdate();
         System.out.println("\nYou have successfully created a personal match!");
       }
+
 
 // =============== END INSERT DATA  =====================================================
 
