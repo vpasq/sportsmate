@@ -4,6 +4,7 @@ import sportsmate.dao.DAO;
 import sportsmate.dao.LoginDAO;
 import sportsmate.dao.PersonalMatchDAO;
 import sportsmate.dao.PlayerDAO;
+import sportsmate.dao.TeamMatchDAO;
 
 public class MenuController {
   private AbstractMenu menu;
@@ -128,7 +129,7 @@ public class MenuController {
           break;
         case "3":
           PersonalMatchDAO personalMatchDAO = new PersonalMatchDAO();
-          personalMatchDAO.showPersonalMatchesJoined(loggedInUserID);
+          personalMatchDAO.listPersonalMatchesJoined(loggedInUserID);
           setMenu(new PersonalTeamMenu());
           displayMenu();
           break;
@@ -180,29 +181,44 @@ public class MenuController {
       }
     }
 
-
     else if (menu instanceof TeamMatchMenu) {
+      TeamMatchDAO teamMatchDAO;
       switch (selectionArr[0]) {
         case "1":
-
-          //setMenu(new CreateTeam());
+          setMenu(new CreateTeamMenu());
           displayMenu();
           break;
         case "2":
-          //setMenu(new JoinTeam());
+          setMenu(new JoinTeamMenu());
           displayMenu();
           break;
         case "3":
-          PersonalMatchDAO personalMatchDAO = new PersonalMatchDAO();
-          personalMatchDAO.showPersonalMatchesJoined(loggedInUserID);
-          setMenu(new PersonalTeamMenu());
+          setMenu(new LeaveTeamMenu());
           displayMenu();
           break;
         case "4":
-          setMenu(new MainSubMenu());
+          teamMatchDAO = new TeamMatchDAO();
+          teamMatchDAO.listTeamsCreated(loggedInUserID);
+          setMenu(new TeamMatchMenu());
           displayMenu();
           break;
         case "5":
+          teamMatchDAO = new TeamMatchDAO();
+          teamMatchDAO.listTeamsJoined(loggedInUserID);
+          setMenu(new TeamMatchMenu());
+          displayMenu();
+          break;
+        case "6":
+          teamMatchDAO = new TeamMatchDAO();
+          teamMatchDAO.listAllTeams();
+          setMenu(new TeamMatchMenu());
+          displayMenu();
+          break;
+        case "7":
+          setMenu(new MainSubMenu());
+          displayMenu();
+          break;
+        case "8":
           System.out.println("\nExiting...\n");
           System.exit(1);
           break;
@@ -210,6 +226,36 @@ public class MenuController {
           break;
       }
     }
+
+    else if (menu instanceof CreateTeamMenu) {
+      String teamName = selectionArr[0];
+      TeamMatchDAO teamMatchDAO = new TeamMatchDAO();
+      teamMatchDAO.createTeam(teamName, loggedInUserID);
+      setMenu(new TeamMatchMenu());
+      displayMenu();
+    }
+
+    else if (menu instanceof JoinTeamMenu) {
+      String teamID = selectionArr[0];
+      TeamMatchDAO teamMatchDAO = new TeamMatchDAO();
+      teamMatchDAO.joinTeam(teamID, loggedInUserID);
+      setMenu(new TeamMatchMenu());
+      displayMenu();
+    }
+
+    else if (menu instanceof LeaveTeamMenu) {
+      //String teamID = selectionArr[0];
+      int t_id = Integer.parseInt(selectionArr[0]);
+      int tmplayer_id = loggedInUserID;
+      //System.out.println("lll" + t_id);
+      //System.out.println("bbb" + tmplayer_id);
+      TeamMatchDAO teamMatchDAO = new TeamMatchDAO();
+      teamMatchDAO.leaveTeam(tmplayer_id, t_id);
+      setMenu(new TeamMatchMenu());
+      displayMenu();
+    }
+
+
 
   }
 

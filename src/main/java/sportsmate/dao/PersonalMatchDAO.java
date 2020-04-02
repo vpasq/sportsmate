@@ -116,7 +116,7 @@ public class PersonalMatchDAO extends DAO {
   }
 
 
-  public void showPersonalMatchesJoined(int loggedInUserID) {
+  public void listPersonalMatchesJoined(int loggedInUserID) {
 
     try {
       conn = getConnection();
@@ -128,7 +128,7 @@ public class PersonalMatchDAO extends DAO {
           + "and p.pid = pmp.p_id "
           + "and pmp.match_id = pm.pmatch_id";
 
-      System.out.println("logged in user: " + loggedInUserID);
+      //System.out.println("logged in user: " + loggedInUserID);
       PreparedStatement pStatement = conn.prepareStatement(sql);
       pStatement.setInt(1, loggedInUserID);
       ResultSet resultSet = pStatement.executeQuery();

@@ -30,10 +30,9 @@ public class PlayerDAO extends DAO {
       ResultSet generatedKeys = pStatement.getGeneratedKeys();
       generatedKeys.next();
 
-      sql = "insert into player VALUES (default, ?, ?)";
+      sql = "insert into player VALUES (default, ?)";
       pStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
       pStatement.setString(1, Integer.toString(generatedKeys.getInt(1)));
-      pStatement.setString(2, null);
       pStatement.execute();
       System.out.printf("Inserted Row into %s%n", "player table");
 
