@@ -10,7 +10,7 @@ public class CreateDatabase extends DAO {
 
   public CreateDatabase() {
     Connection conn;
-    String url = "jdbc:mysql://localhost:8889/?serverTimezone=UTC#";
+    String url = "jdbc:mysql://localhost:3306/?serverTimezone=UTC#";
     String username = "demo";
     String password = "demo";
 

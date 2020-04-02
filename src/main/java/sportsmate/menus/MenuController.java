@@ -177,6 +177,10 @@ public class MenuController {
           displayMenu();
           break;
         case "3":
+          setMenu(new PersonalTeamMenu());
+          displayMenu();
+          break;
+        case "4":
           System.out.println("\nExiting...\n");
           System.exit(1);
           break;

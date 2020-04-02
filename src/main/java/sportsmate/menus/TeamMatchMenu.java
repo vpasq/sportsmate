@@ -21,8 +21,9 @@ public class TeamMatchMenu extends AbstractMenu {
       do {
         System.out.printf("%n> ");
         selection = getScanner().next();
-      } while ((!selection.equals("1")) && (!selection.equals("2")) && (!selection.equals("3")) &&
-          (!selection.equals("4")) && (!selection.equals("5")) && (!selection.equals("6")));
+      } while ((!selection.equals("1")) && (!selection.equals("2")) && (!selection.equals("3"))
+          && (!selection.equals("4")) && (!selection.equals("5")) && (!selection.equals("6"))
+          && (!selection.equals("7"))  && (!selection.equals("8")));
     } catch (NoSuchElementException noSuchElementException) {
       System.err.println("Invalid input. Terminating.");
     }

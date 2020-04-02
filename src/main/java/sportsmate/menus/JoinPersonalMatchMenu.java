@@ -14,13 +14,15 @@ public class JoinPersonalMatchMenu extends AbstractMenu {
 
     getPrompt("Enter 1 to List All Personal Matches\n"
         + "Enter 2 to Search Filtered Personal Matches\n" // Add by Hu 20200327
-        + "Enter 3 to Exit\n");
+        + "Enter 3 to go to previous menu\n" // Add by vp
+        + "Enter 4 to Exit\n"); // Add by vp
 
     try {
       do {
         System.out.printf("%n> ");
         selection = getScanner().next();
-      } while ((!selection.equals("1")) && (!selection.equals("2")) && (!selection.equals("3")));
+      } while ((!selection.equals("1")) && (!selection.equals("2")) && (!selection.equals("3"))
+          && (!selection.equals("4")));
     } catch (NoSuchElementException noSuchElementException) {
       System.err.println("Invalid input. Terminating.");
     }

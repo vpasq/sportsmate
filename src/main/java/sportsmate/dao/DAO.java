@@ -9,7 +9,7 @@ import java.sql.Statement;
 public class DAO {
 
   public Connection getConnection() {
-    String url = "jdbc:mysql://localhost:8889/sportsmate?serverTimezone=UTC#";
+    String url = "jdbc:mysql://localhost:3306/sportsmate?serverTimezone=UTC#";
     String username = "demo";
     String password = "demo";
 
