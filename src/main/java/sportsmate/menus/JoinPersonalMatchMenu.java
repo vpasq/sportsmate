@@ -13,7 +13,7 @@ public class JoinPersonalMatchMenu extends AbstractMenu {
     getPrompt("\n" + getLineBreak(27) + "\nJoin a Personal Match\n\n");
 
     getPrompt("Enter 1 to List All Personal Matches\n"
-        //+ "Enter 2 to Search Personal Matches by Location\n"
+        + "Enter 2 to Search Filtered Personal Matches\n" // Add by Hu 20200327
         + "Enter 3 to Exit\n");
 
     try {

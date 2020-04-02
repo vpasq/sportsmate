@@ -6,6 +6,7 @@ import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.Time;
+import java.text.ParseException;
 import java.util.TimeZone;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
@@ -116,6 +117,115 @@ public class PersonalMatchDAO extends DAO {
       }
       catch (Exception e) { /* ignore close errors */ }
     }
+  }
+
+  /*
+  Function: listFilteredPersonalMatches
+  Editor: Xiongbo Hu
+  Date: 20200327
+   */
+  public void listFilteredPersonalMatches(int loggedInUserID,
+                                          String matchID,
+                                          String location,
+                                          String date,
+                                          String gameType,
+                                          String playersLeft) throws ParseException {
+    Boolean andFlag = false;
+    Boolean foundFlag = false;
+    String sql = "select * from personal_match";
+    if(matchID.length() > 0) {
+      sql += " where pmatch_id = ";
+      sql += matchID;
+      andFlag = true;
+    }
+    if(location.length() > 0)
+    {
+      if(andFlag == true) {
+        sql += " and location = \"";
+      }
+      else {
+        sql += " where location = \"";
+      }
+      sql = sql + location + "\"";
+      andFlag = true;
+    }
+    if(date.length() > 0)
+    {
+      try {
+        //SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+        //sdf.setTimeZone(TimeZone.getTimeZone("EST"));
+        //java.util.Date gameDate = sdf.parse(date);
+        //java.sql.Timestamp sqlDate = new java.sql.Timestamp(gameDate.getTime());
+        if(andFlag == true) {
+          sql += " and game_date > ";
+        }
+        else {
+          sql += " where game_date > ";
+        }
+        //sql += gameDate.toString();
+        sql += date;
+        andFlag = true;
+      } catch (Exception e) {
+        System.out.printf("Date formation error.\n\n");
+      }
+    }
+    if(gameType.length() > 0)
+    {
+      if(andFlag == true) {
+        sql += " and game_type = ";
+      }
+      else {
+        sql += " where game_type = ";
+      }
+      sql += gameType;
+      andFlag = true;
+    }
+    if(playersLeft.length() > 0)
+    {
+      if(andFlag == true) {
+        sql += " and num_initial_players * 2 - num_players_joined = ";
+      }
+      else {
+        sql += " where num_initial_players * 2 - num_players_joined = ";
+      }
+      sql += playersLeft;
+      andFlag = true;
+    }
+    System.out.printf("%s\n", sql);
+
+    try {
+      conn = getConnection();
+      PreparedStatement pStatement = conn.prepareStatement(sql);
+      ResultSet resultSet = pStatement.executeQuery();
+      System.out.printf("====================================================\n");
+      System.out.printf("%n%-11s%-14s%-11s%-13s%-13s%-11s%-12s%-18s%-19s%n",
+              "Match ID", "Listed by ID", "Location", "Date", "Start Time", "End Time", "Game Type",
+              "Initial Players", "Players Joined");
+      while (resultSet.next()) {
+        foundFlag = true;
+        pmatch_id = resultSet.getInt("pmatch_id");
+        player_id = resultSet.getInt("player_id");
+        location = resultSet.getString("location");
+        game_date = resultSet.getDate("game_date");
+        start_at = resultSet.getTime("start_at");
+        end_at = resultSet.getTime("end_at");
+        game_type = resultSet.getInt("game_type");
+        num_initial_players = resultSet.getInt("num_initial_players");
+        num_players_joined = resultSet.getInt("num_players_joined");
+
+        System.out.printf("%-11s%-14s%-11s%-13s%-13s%-11s%-12s%-18s%-19s%n",
+                pmatch_id, player_id, location, game_date, start_at, end_at, game_type,
+                num_initial_players, num_players_joined);
+      }
+      if(foundFlag == false)
+      {
+        System.out.printf("No Records\n\n");
+      }
+    }catch (Exception e){
+      System.err.println(e.getMessage());
+      e.printStackTrace();
+    }
+
   }
 
   public void joinPersonalMatch(int p_id) {
