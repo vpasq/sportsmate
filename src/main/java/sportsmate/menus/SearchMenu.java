@@ -2,21 +2,23 @@ package sportsmate.menus;
 
 import java.util.NoSuchElementException;
 
-public class TeamMatchMenu extends AbstractMenu {
+public class SearchMenu extends AbstractMenu{
 
   /**
-   * Displays Team Match menu.
+   * Displays menu to search menu.
    */
   @Override
   public String[] displayMenu() {
-    getPrompt("\nEnter 1 to Create a Team Match"
-        + "\nEnter 2 to Join a Team Match"
-        //+ "\nEnter 3 to Cancel a Team Match"
-        + "\nEnter 3 to List Team Matches I have created"
-        + "\nEnter 4 to List Team Matches my Team(s) have joined"
-        + "\nEnter 5 to List All Team Matches"
-        + "\nEnter 6 for Main Menu"
-        + "\nEnter 7 to Exit\n");
+
+    getPrompt("\n" + getLineBreak(11) + "\nSearch Menu\n\n");
+
+    getPrompt("Enter 1 to list all Personal Matches\n"
+        + "Enter 2 to list all Teams\n" // Add by vp
+        + "Enter 3 to list all Team Matches\n" // Add by vp
+        + "Enter 4 for a filtered search of Personal Matches\n" // Add by Hu 20200327
+        + "Enter 5 for Main Menu\n" // Add by vp
+        + "Enter 6 to Exit\n"); // Add by vp
+
     try {
       do {
         System.out.printf("%n> ");
@@ -26,13 +28,16 @@ public class TeamMatchMenu extends AbstractMenu {
           && (!selection.equals("3"))
           && (!selection.equals("4"))
           && (!selection.equals("5"))
-          && (!selection.equals("6"))
-          && (!selection.equals("7")));
+          && (!selection.equals("6")));
     } catch (NoSuchElementException noSuchElementException) {
       System.err.println("Invalid input. Terminating.");
     }
 
     String[] str = {selection};
     return str;
+
   }
+
+
+
 }

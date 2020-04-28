@@ -49,7 +49,7 @@ public class DropTables extends DAO {
     if (conn != null) {
       try {
         conn.close();
-        System.out.println("Disconnected from database.");
+        //System.out.println("Disconnected from database.");
       } catch (Exception e) { /* ignore close errors */ }
     }
   }

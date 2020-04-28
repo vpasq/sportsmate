@@ -1,6 +1,6 @@
 package sportsmate.menus;
 
-public class SearchFilteredMatchMenu extends AbstractMenu{
+public class SearchFilteredMatchMenu extends AbstractMenu {
 
     @Override
     String[] displayMenu() {

@@ -10,7 +10,6 @@ public class CreateTeamMenu extends AbstractMenu {
   public String[] displayMenu() {
     String teamName;
 
-
     getPrompt("\n" + getLineBreak(27) + "\nCreate a new Team\n\n");
 
     getPrompt("Enter the name of the team: ");

@@ -1,5 +1,8 @@
 package sportsmate.menus;
 
+import sportsmate.dao.PersonalMatchDAO;
+import sportsmate.dao.TeamDAO;
+
 public class JoinTeamMenu extends AbstractMenu {
 
 
@@ -8,14 +11,20 @@ public class JoinTeamMenu extends AbstractMenu {
    */
   @Override
   public String[] displayMenu() {
-    String teamName;
+//    String teamName;
 
-    getPrompt("\n" + getLineBreak(11) + "\nJoin a Team\n\n");
+//    getPrompt("\n" + getLineBreak(11) + "\nJoin a Team\n\n");
+//
+//    getPrompt("Enter the Team ID of the Team you would like to Join\n"
+//        + "(See the list of current teams above)");
 
-    getPrompt("Enter the team id of the team you would like to join: ");
-    teamName = getScanner().nextLine();
+//    teamName = getScanner().nextLine();
 
-    String[] str = {teamName};
+    TeamDAO teamDAO = new TeamDAO();
+    teamDAO.listAllTeams();
+
+//    String[] str = {teamName};
+    String[] str = {selection};
     return str;
   }
 

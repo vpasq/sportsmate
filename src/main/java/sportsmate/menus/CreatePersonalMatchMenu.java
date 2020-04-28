@@ -1,6 +1,9 @@
 package sportsmate.menus;
 
 
+import sportsmate.dao.PersonalMatchDAO;
+import sportsmate.dao.GymDAO;
+import sportsmate.dao.TeamMatchDAO;
 import sportsmate.utilty.check;
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -13,17 +16,21 @@ public class CreatePersonalMatchMenu extends AbstractMenu {
    */
   @Override
   public String[] displayMenu() {
-    String location;
+    String gymID;
     String game_date;
     String startAt;
     String endAt;
     String game_type;
     String num_initial_players;
 
+    GymDAO gymDAO = new GymDAO();
+    gymDAO.listAllGyms();
+
     getPrompt("\n" + getLineBreak(27) + "\nCreate a new Personal Match\n\n");
 
-    getPrompt("Enter the location of the game: ");
-    location = getScanner().nextLine();
+    getPrompt("Enter the Gym ID of the location of the game:\n"
+        + "(See list of available Gyms): ");
+    gymID = getScanner().nextLine();
 
 
     getPrompt("Enter the date of the game (format: mm-dd-yyyy): ");
@@ -105,7 +112,7 @@ public class CreatePersonalMatchMenu extends AbstractMenu {
     }
 
 
-    String[] str = {location, game_date, startAt, endAt, game_type, num_initial_players};
+    String[] str = {gymID, game_date, startAt, endAt, game_type, num_initial_players};
     return str;
   }
 }

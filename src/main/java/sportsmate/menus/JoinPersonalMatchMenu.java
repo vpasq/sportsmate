@@ -1,6 +1,13 @@
 package sportsmate.menus;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.util.NoSuchElementException;
+import java.util.Scanner;
+import sportsmate.dao.DAO;
+import sportsmate.dao.PersonalMatchDAO;
+
 
 public class JoinPersonalMatchMenu extends AbstractMenu {
 
@@ -10,22 +17,8 @@ public class JoinPersonalMatchMenu extends AbstractMenu {
   @Override
   public String[] displayMenu() {
 
-    getPrompt("\n" + getLineBreak(27) + "\nJoin a Personal Match\n\n");
-
-    getPrompt("Enter 1 to List All Personal Matches\n"
-        + "Enter 2 to Search Filtered Personal Matches\n" // Add by Hu 20200327
-        + "Enter 3 to go to previous menu\n" // Add by vp
-        + "Enter 4 to Exit\n"); // Add by vp
-
-    try {
-      do {
-        System.out.printf("%n> ");
-        selection = getScanner().next();
-      } while ((!selection.equals("1")) && (!selection.equals("2")) && (!selection.equals("3"))
-          && (!selection.equals("4")));
-    } catch (NoSuchElementException noSuchElementException) {
-      System.err.println("Invalid input. Terminating.");
-    }
+    PersonalMatchDAO personalMatchDAO = new PersonalMatchDAO();
+    personalMatchDAO.listAllPersonalMatches();
 
     String[] str = {selection};
     return str;

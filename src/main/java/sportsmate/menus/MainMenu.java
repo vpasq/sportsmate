@@ -11,7 +11,7 @@ public class MainMenu extends AbstractMenu {
   public String[] displayMenu() {
 
     getPrompt("\nWelcome to SportsMate!\n" + getLineBreak(22));
-    getPrompt("Enter 1 to Create a New Account\nEnter 2 to Log In\nEnter 3 to Exit");
+    getPrompt("Enter 1 to Log In\nEnter 2 to Create a New Account\nEnter 3 to Exit");
 
     try {
       do {
