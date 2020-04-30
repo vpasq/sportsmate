@@ -37,7 +37,7 @@ public abstract class AbstractMenu {
    * @param num the number of characters in the line break
    * @return a line break with a set number of characters
    */
-  protected String getLineBreak(int num) {
+  public String getLineBreak(int num) {
     String lineBreak = "";
     for (int i = 0; i < num; i++) {
       lineBreak += "=";
@@ -50,7 +50,7 @@ public abstract class AbstractMenu {
    *
    * @param str string to prompt user
    */
-  protected void getPrompt(String str) {
+  public void getPrompt(String str) {
     System.out.print(str);
   }
 

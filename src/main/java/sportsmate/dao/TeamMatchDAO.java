@@ -88,7 +88,7 @@ public class TeamMatchDAO extends DAO {
   }
 
 
-  public boolean checkIfTeamAdmin(int loggedInUserID2, int hostTeamID2) {
+  public boolean isAdmin(int loggedInUserID2, int hostTeamID2) {
 
     try {
       conn = getConnection();
@@ -224,7 +224,7 @@ public class TeamMatchDAO extends DAO {
         System.out.println("Match Creator: " + username);
         System.out.println("Match ID: " + match_id);
         System.out.println("Host Team ID: " + host_id);
-        System.out.println("Gym ID: " + guest_id);
+        System.out.println("Gym ID: " + gym_id);
         System.out.println("Date: " + game_date);
         System.out.println("Start Time: " + start_at);
         System.out.println("End Time: " + end_at);

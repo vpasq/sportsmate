@@ -8,12 +8,12 @@ public class PersonalMatchMenu extends AbstractMenu {
    */
   @Override
   public String[] displayMenu() {
-          getPrompt("\nEnter 1 Create a Personal Match"
-              + "\nEnter 2 Join a Personal Match"
+          getPrompt("\nEnter 1 Create Personal Match"
+              + "\nEnter 2 Join Personal Match"
               + "\nEnter 3 List Personal Matches I have Created"
               + "\nEnter 4 List Personal Matches I have Joined"
               + "\nEnter 5 List All Current Personal Matches"
-              + "\nEnter 6 the Main Menu"
+              + "\nEnter 6 Main Menu"
               + "\nEnter 7 Exit\n");
 
     try {

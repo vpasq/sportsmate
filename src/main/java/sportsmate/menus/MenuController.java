@@ -72,12 +72,9 @@ public class MenuController {
       LoginDAO loginDao = new LoginDAO();
       boolean userExists = loginDao.authLogin(username, password);
       if (userExists) {
-        menu.getPrompt( "\nHELLO " + username + ", "
-            + "You Have Successfully Logged In!\n");
         loggedInUserID = loginDao.getLoggedInUserID();
-//        menu.getPrompt("\n" + menu.getLineBreak(username.length(), 39) + "\nHello " + username + ", "
-//            + "You Have Succesfully Logged In!\n" + menu.getLineBreak(username.length(), 39) + "\n");
-//        loggedInUserID = loginDao.getLoggedInUserID();
+        menu.getPrompt("\n" + menu.getLineBreak(username.length(), 39) + "\nHello " + username + ", "
+            + "You Have Succesfully Logged In!\n" + menu.getLineBreak(username.length(), 39) + "\n");
         setMenu(new MainSubMenu());
         displayMenu();
       } else {
@@ -111,11 +108,14 @@ public class MenuController {
           setMenu(new TeamMatchMenu());
           displayMenu();
           break;
-//        case "4":
-//          setMenu(new SearchMenu());
-//          displayMenu();
-//          break;
         case "4":
+          System.out.println("\n============================");
+          System.out.println("Create New Account / Log In:");
+          System.out.println("============================");
+          setMenu(new MainMenu());
+          displayMenu();
+          break;
+        case "5":
           System.out.println("\nExiting...\n");
           System.exit(1);
           break;
@@ -346,7 +346,7 @@ public class MenuController {
         case "2":
           teamDAO = new TeamDAO();
           teamDAO.listTeamsCreated(loggedInUserID);
-          setMenu(new JoinTeamMatchMenu());
+          setMenu(new JoinTeamMatchMenu(loggedInUserID));
           displayMenu();
           break;
 //        case "3":
@@ -429,4 +429,9 @@ public class MenuController {
   public int getLoggedInUserID() {
     return loggedInUserID;
   }
+
+  public AbstractMenu getMenu() {
+    return menu;
+  }
+
 }

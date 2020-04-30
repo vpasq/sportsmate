@@ -93,7 +93,7 @@ public class PersonalMatchDAO extends DAO {
       PreparedStatement pStatement = conn.prepareStatement(sql);
       ResultSet resultSet = pStatement.executeQuery();
 
-      getPrompt("\n" + getLineBreak(41) + "\nList of All the Current Personal Matches:\n");
+      getPrompt("\n" + getLineBreak(33) + "\nList of Current Personal Matches:\n");
 
 //      System.out.printf("%n%-11s%-12s%-8s%-13s%-13s%-11s%-12s%-18s%-19s%n",
 //          "Match ID", "Created By", "Gym ID", "Date", "Start Time", "End Time", "Game Type",

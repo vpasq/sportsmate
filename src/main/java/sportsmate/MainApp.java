@@ -17,6 +17,8 @@ public class MainApp {
     new CreateTables();
     MenuController mc = new MenuController();
     mc.setMenu(new MainMenu());
+    mc.getMenu().getPrompt("\n\n" + mc.getMenu().getLineBreak(22)
+        + "\nWelcome to SportsMate!\n" + mc.getMenu().getLineBreak(22));
     mc.displayMenu();
   }
 }

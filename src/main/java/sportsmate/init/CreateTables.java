@@ -69,6 +69,19 @@ public class CreateTables extends DAO {
       tablesCreated = "team:";
       //System.out.println("table created successfully...");
 
+      sql = "CREATE TABLE IF NOT EXISTS personal_match_gymnasium"
+          + "("
+          + " pmg_id  integer primary key auto_increment,"
+          + " pmg_name varchar(25),"
+          + " pmg_location varchar(25),"
+          + " unique (pmg_name, pmg_location)"
+          + ")";
+
+      pStatement = conn.prepareStatement(sql);
+      pStatement.execute();
+      tablesCreated += "persoanl_match_gymnasium:";
+      //System.out.println("table created successfully...")
+
 
       sql = "CREATE TABLE IF NOT EXISTS team_match"
           + "("
@@ -76,12 +89,12 @@ public class CreateTables extends DAO {
           + " host_id integer NOT NULL,"
           + " guest_id integer,"
           + " gym_id integer NOT NULL,"
-          //+ " location varchar(25) NOT NULL,"
           + " game_date DATE NOT NULL,"
           + " start_at TIME NOT NULL,"
           + " end_at TIME NOT NULL,"
           + " foreign key (host_id) references team(team_id),"
-          + " foreign key (guest_id) references team(team_id)"
+          + " foreign key (guest_id) references team(team_id),"
+          + " foreign key (gym_id) references personal_match_gymnasium(pmg_id)"
           + ")";
 
       pStatement = conn
@@ -113,21 +126,6 @@ public class CreateTables extends DAO {
       pStatement.execute();
       tablesCreated += "team_match_players:";
       //System.out.println("table created successfully...");
-
-
-      sql = "CREATE TABLE IF NOT EXISTS personal_match_gymnasium"
-          + "("
-          + " pmg_id  integer primary key auto_increment,"
-          + " pmg_name varchar(25),"
-          + " pmg_location varchar(25),"
-          + " unique (pmg_name, pmg_location)"
-          + ")";
-
-      pStatement = conn.prepareStatement(sql);
-      pStatement.execute();
-      tablesCreated += "persoanl_match_gymnasium:";
-      //System.out.println("table created successfully...")
-
 
 
 
