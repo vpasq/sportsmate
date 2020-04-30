@@ -17,10 +17,10 @@ public class LogInMenu extends AbstractMenu {
       System.exit(1);
     }
 
-    getPrompt(getLineBreak(6) + "\nLog In\n\n");
-    String username = console.readLine("Enter Username: ");
+    getPrompt(getLineBreak(6) + "\nLog In\n" + getLineBreak(6) + "\n");
+    String username = console.readLine("\nEnter Username: ");
 
-    char[] passwordArray = console.readPassword("Enter password: ");
+    char[] passwordArray = console.readPassword("Enter Password: ");
 
     String[] str = {username, new String(passwordArray)};
     return str;

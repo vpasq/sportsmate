@@ -15,7 +15,8 @@ public class RegisterMenu extends AbstractMenu {
     String userLastName;
     String userGender;
 
-    getPrompt(getLineBreak(20) + "\nCreate a new account\n\n");
+    getPrompt(getLineBreak(20) + "\nCreate a new account\n");
+    System.out.println("====================\n");
 
     getPrompt("Enter your first name: ");
     userFirstName = getScanner().nextLine();

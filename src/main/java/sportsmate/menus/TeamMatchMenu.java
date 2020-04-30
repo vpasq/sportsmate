@@ -9,14 +9,14 @@ public class TeamMatchMenu extends AbstractMenu {
    */
   @Override
   public String[] displayMenu() {
-    getPrompt("\nEnter 1 to Create a Team Match"
-        + "\nEnter 2 to Join a Team Match"
+    getPrompt("\nEnter 1 Create a Team Match"
+        + "\nEnter 2 Join a Team Match"
         //+ "\nEnter 3 to Cancel a Team Match"
-        + "\nEnter 3 to List Team Matches I have created"
-        + "\nEnter 4 to List Team Matches my Team(s) have joined"
-        + "\nEnter 5 to List All Team Matches"
-        + "\nEnter 6 for Main Menu"
-        + "\nEnter 7 to Exit\n");
+        + "\nEnter 3 List Team Matches I have created"
+        + "\nEnter 4 List Team Matches my Team(s) have joined"
+        + "\nEnter 5 List All Team Matches"
+        + "\nEnter 6 Main Menu"
+        + "\nEnter 7 Exit\n");
     try {
       do {
         System.out.printf("%n> ");

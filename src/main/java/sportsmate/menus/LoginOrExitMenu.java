@@ -9,8 +9,12 @@ public class LoginOrExitMenu extends AbstractMenu {
    */
   @Override
   public String[] displayMenu() {
-    getPrompt("\n" + getLineBreak(44) + "\nYou have successfully created a new account!\n");
-    getPrompt("\nEnter 1 to Log In Now!\nEnter 2 to exit\n");
+    getPrompt("\nYOU HAVE SUCCESFULLY CREATED A NEW ACCOUNT!\n\n");
+
+    getPrompt(getLineBreak(6) + "\nLog In\n");
+    System.out.println("======\n");
+
+    getPrompt("Enter 1 Log In\nEnter 2 exit\n");
 
     try {
       do {

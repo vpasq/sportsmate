@@ -9,10 +9,14 @@ public class MainSubMenu extends AbstractMenu {
    */
   @Override
   public String[] displayMenu() {
-    getPrompt("\nEnter 1 for Personal Match Menu"
-        + "\nEnter 2 for Team Menu"
-        + "\nEnter 3 for Team Match Menu"
-        + "\nEnter 4 to Exit\n");
+
+
+    getPrompt("\n" + getLineBreak(9) + "\nMain Menu\n" + getLineBreak(9) + "\n");
+
+    getPrompt("\nEnter 1 Personal Match Menu"
+        + "\nEnter 2 Team Menu"
+        + "\nEnter 3 Team Match Menu"
+        + "\nEnter 4 Exit\n");
 
     try {
       do {

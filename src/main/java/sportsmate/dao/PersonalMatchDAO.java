@@ -16,6 +16,7 @@ public class PersonalMatchDAO extends DAO {
   private Connection conn;
   private String sql;
   private PreparedStatement pStatement;
+  private String username;
   private int pmatch_id;
   private int player_id;
   private int pmg_id;
@@ -52,7 +53,10 @@ public class PersonalMatchDAO extends DAO {
       pStatement.setInt(7, num_initial_players );
       pStatement.setInt(8, 0 );
       pStatement.executeUpdate();
-      System.out.println("\nYou have successfully created a personal match!");
+      System.out.println("\nYOU HAVE SUSSECCFULLY CREATED A PERSONAL MATCH!");
+      System.out.println("\n================================");
+      System.out.println("Create or Join a Personal Match:");
+      System.out.println("================================");
     }
     catch (Exception e){
       System.err.printf ("Cannot connect to server%n%s", e);
@@ -72,9 +76,17 @@ public class PersonalMatchDAO extends DAO {
 
   public void listAllPersonalMatches() {
 
+//    String sql = "select distinct * "
+//        + "from user u, player p, personal_match pm, personal_match_gymnasium pmg"
+//        + " where pm.gym_id = pmg.pmg_id "
+//        + "and pm.player_id = p.pid "
+//        + "and p.pid = u.id";
+
     String sql = "select distinct * "
-        + "from personal_match pm, personal_match_gymnasium pmg"
-        + " where pm.gym_id = pmg.pmg_id";
+        + "from user u, player p, personal_match pm, personal_match_gymnasium pmg "
+        + " where u.id = p.user_id "
+        + "and p.pid = pm.player_id "
+        + "and pm.gym_id = pmg.pmg_id ";
 
     try {
       conn = getConnection();
@@ -88,6 +100,7 @@ public class PersonalMatchDAO extends DAO {
 //          "Initial Players", "Players Joined");
 
       while (resultSet.next()) {
+        username = resultSet.getString("u.username");
         pmatch_id = resultSet.getInt("pmatch_id");
         player_id = resultSet.getInt("player_id");
         pmg_id = resultSet.getInt("pmg_id");
@@ -105,8 +118,8 @@ public class PersonalMatchDAO extends DAO {
 //            num_initial_players, num_players_joined);
 
         System.out.println();
-        System.out.println("Match ID: " + pmatch_id);
-        System.out.println("Match Creator ID: " + player_id);
+        System.out.println("Match ID " + pmatch_id);
+        System.out.println("Match Creator: " + username);
         System.out.println("Gym ID: " + pmg_id);
         System.out.println("Gym Name: " + pmg_name);
         System.out.println("Gym Location: " + pmg_location);
@@ -118,6 +131,7 @@ public class PersonalMatchDAO extends DAO {
         System.out.println("Players Joined: " + num_players_joined);
       }
       System.out.println();
+
     }
     catch (Exception e){
       System.err.printf ("Cannot connect to server%n%s", e);
@@ -145,8 +159,8 @@ public class PersonalMatchDAO extends DAO {
                                           String date,
                                           String gameType,
                                           String playersLeft) throws ParseException {
-    Boolean andFlag = false;
-    Boolean foundFlag = false;
+    boolean andFlag = false;
+    boolean foundFlag = false;
     String sql = "select * from personal_match";
     if (matchID.length() > 0) {
       sql += " where pmatch_id = ";
@@ -247,12 +261,13 @@ public class PersonalMatchDAO extends DAO {
 //          + "where p.pid=? "
 //          + "and p.pid = pm.player_id";
 
-      String sql = "select distinct pmatch_id, player_id, pmg.pmg_id, pmg.pmg_name, pmg.pmg_location,"
+      String sql = "select distinct u.username, pmatch_id, player_id, pmg.pmg_id, pmg.pmg_name, pmg.pmg_location,"
           + " game_date, start_at, end_at, game_type, num_initial_players, num_players_joined "
-          + "from player p, personal_match pm, personal_match_gymnasium pmg "
+          + "from user u, player p, personal_match pm, personal_match_gymnasium pmg "
           + "where p.pid=? "
           + "and p.pid = pm.player_id "
-          + "and pm.gym_id = pmg.pmg_id";
+          + "and pm.gym_id = pmg.pmg_id "
+          + "and p.user_id = u.id";
 
       //System.out.println("logged in user: " + loggedInUserID);
       PreparedStatement pStatement = conn.prepareStatement(sql);
@@ -267,6 +282,7 @@ public class PersonalMatchDAO extends DAO {
 //          "Initial Players", "Players Joined");
 
       while (resultSet.next()) {
+        username = resultSet.getString("u.username");
         pmatch_id = resultSet.getInt("pmatch_id");
         player_id = resultSet.getInt("player_id");
         pmg_id = resultSet.getInt("pmg_id");
@@ -285,7 +301,7 @@ public class PersonalMatchDAO extends DAO {
 
         System.out.println();
         System.out.println("Match ID: " + pmatch_id);
-        System.out.println("Match Creator ID: " + player_id);
+        System.out.println("Match Creator: " + username);
         System.out.println("Gym ID: " + pmg_id);
         System.out.println("Gym Name: " + pmg_name);
         System.out.println("Gym Location: " + pmg_location);
@@ -317,20 +333,15 @@ public class PersonalMatchDAO extends DAO {
     try {
       conn = getConnection();
 
-//      String sql = "select pmatch_id, player_id, pmg.pmg_id, pmg.pmg_name, pmg.pmg_location, game_date, "
-//          + "start_at, end_at, game_type, num_initial_players, num_players_joined "
-//              + "from player p, personal_match pm, personal_match_gymnasium pmg "
-//              + "where p.pid=? "
-//              + "and p.pid = pm.player_id "
-//              + "and pm.gym_id = pmg.pmg_id";
-
       String sql = "select * "
-          + "from player p, personal_match pm, personal_match_players pmp, "
-          + "personal_match_gymnasium pmg "
-          + "where p.pid=? "
-          + "and p.pid= pmp.p_id "
+          + "from personal_match_players pmp, personal_match pm, "
+          + "player p, user u, personal_match_gymnasium pmg "
+          + "where pmp.p_id = ? "
+          + "and pm.gym_id = pmg.pmg_id "
           + "and pmp.match_id = pm.pmatch_id "
-          + "and pm.gym_id = pmg.pmg_id";
+          + "and pm.player_id = p.pid "
+          + "and p.user_id = u.id";
+
 
       PreparedStatement pStatement = conn.prepareStatement(sql);
       pStatement.setInt(1, loggedInUserID);
@@ -344,17 +355,18 @@ public class PersonalMatchDAO extends DAO {
 //              "Initial Players", "Players Joined");
 
       while (resultSet.next()) {
-        pmatch_id = resultSet.getInt("pmatch_id");
-        player_id = resultSet.getInt("player_id");
+        username = resultSet.getString("u.username");
+        pmatch_id = resultSet.getInt("pm.pmatch_id");
+        player_id = resultSet.getInt("pm.player_id");
         pmg_id = resultSet.getInt("pmg_id");
         pmg_name = resultSet.getString("pmg_name");
         pmg_location = resultSet.getString("pmg_location");
-        game_date = resultSet.getDate("game_date");
-        start_at = resultSet.getTime("start_at");
-        end_at = resultSet.getTime("end_at");
-        game_type = resultSet.getInt("game_type");
-        num_initial_players = resultSet.getInt("num_initial_players");
-        num_players_joined = resultSet.getInt("num_players_joined");
+        game_date = resultSet.getDate("pm.game_date");
+        start_at = resultSet.getTime("pm.start_at");
+        end_at = resultSet.getTime("pm.end_at");
+        game_type = resultSet.getInt("pm.game_type");
+        num_initial_players = resultSet.getInt("pm.num_initial_players");
+        num_players_joined = resultSet.getInt("pm.num_players_joined");
 
 //        System.out.printf("%-11s%-12s%-8s%-13s%-13s%-11s%-12s%-18s%-19s%n",
 //                pmatch_id, player_id, gym_id, game_date, start_at, end_at, game_type,
@@ -363,7 +375,7 @@ public class PersonalMatchDAO extends DAO {
 
         System.out.println();
         System.out.println("Match ID: " + pmatch_id);
-        System.out.println("Match Creator ID: " + player_id);
+        System.out.println("Match Creator: " + username);
         System.out.println("Gym ID: " + pmg_id);
         System.out.println("Gym Name: " + pmg_name);
         System.out.println("Gym Location: " + pmg_location);
@@ -394,9 +406,13 @@ public class PersonalMatchDAO extends DAO {
   public void joinPersonalMatch(int p_id) {
     Scanner sc = new Scanner(System.in);
 
-    System.out.println("\n\n" + "=====================================================" +
-        "\nEnter the Match ID of the Game you would like to Join:\n"
-        + "(See the list of current personal matches above)");
+//    System.out.println("\n\n" + "=====================================================" +
+//        "\nEnter the Match ID of the Game you would like to Join:\n"
+//        + "(See the list of current personal matches above)");
+
+    System.out.println("\nEnter the Match ID of the Game you would like to Join:\n"
+        + "(See list above)");
+
 
     System.out.printf("%n> ");
     int match_id = Integer.parseInt(sc.next());
@@ -408,7 +424,7 @@ public class PersonalMatchDAO extends DAO {
       pStatement.setInt(1, p_id);
       pStatement.setInt(2, match_id );
       pStatement.executeUpdate();
-      System.out.println("\nYou have successfully joined a personal match!");
+      System.out.println("\nYOU HAVE SUCCESSFULLY JOINED A PERSONAL MATCH!");
 
       sql = "UPDATE personal_match SET num_players_joined = num_players_joined + 1 "
           + "where pmatch_id= ?";

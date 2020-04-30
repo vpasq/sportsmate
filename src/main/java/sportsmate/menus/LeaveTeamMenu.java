@@ -11,7 +11,8 @@ public class LeaveTeamMenu extends AbstractMenu {
 
     getPrompt("\n" + getLineBreak(12) + "\nLeave a Team\n\n");
 
-    getPrompt("Enter the Team ID of the team you would like to leave: ");
+    getPrompt("Enter the Team ID of the team you would like to leave\n"
+        + "(See list above): ");
     teamName = getScanner().nextLine();
 
     String[] str = {teamName};

@@ -12,12 +12,12 @@ public class SearchMenu extends AbstractMenu{
 
     getPrompt("\n" + getLineBreak(11) + "\nSearch Menu\n\n");
 
-    getPrompt("Enter 1 to list all Personal Matches\n"
-        + "Enter 2 to list all Teams\n" // Add by vp
-        + "Enter 3 to list all Team Matches\n" // Add by vp
-        + "Enter 4 for a filtered search of Personal Matches\n" // Add by Hu 20200327
-        + "Enter 5 for Main Menu\n" // Add by vp
-        + "Enter 6 to Exit\n"); // Add by vp
+    getPrompt("Enter 1 list all Personal Matches\n"
+        + "Enter 2 list all Teams\n" // Add by vp
+        + "Enter 3 list all Team Matches\n" // Add by vp
+        + "Enter 4 filtered search of Personal Matches\n" // Add by Hu 20200327
+        + "Enter 5 Main Menu\n" // Add by vp
+        + "Enter 6 Exit\n"); // Add by vp
 
     try {
       do {

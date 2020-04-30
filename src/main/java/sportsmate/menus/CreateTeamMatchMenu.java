@@ -6,6 +6,11 @@ import sportsmate.dao.TeamDAO;
 import sportsmate.dao.TeamMatchDAO;
 
 public class CreateTeamMatchMenu extends AbstractMenu {
+  private int loggedInUser;
+
+  public CreateTeamMatchMenu(int loggedInUser) {
+    this.loggedInUser = loggedInUser;
+  }
 
   /**
    * Displays Create Team Match Menu.
@@ -27,25 +32,38 @@ public class CreateTeamMatchMenu extends AbstractMenu {
 
     getPrompt("\n" + getLineBreak(25) + "\nCreate a Team Match Game:\n");
 
-    getPrompt("\nEnter a Host Team ID where you are the admin.\n"
+    getPrompt("\nEnter a Host Team ID Where You Are the Admin.\n"
         + "(See list above): ");
-
     hostTeamID = getScanner().nextLine();
 
-    getPrompt("\nEnter the Gym ID to reserve the gymnasium for this match:\n"
+    TeamMatchDAO teamMatchDAO = new TeamMatchDAO();
+    int hostTeamIDTemp = Integer.parseInt(hostTeamID);
+
+    while (!teamMatchDAO.checkIfTeamAdmin(loggedInUser, hostTeamIDTemp)) {
+      System.out.println("\nWARNING! YOU CANNOT CREATE THIS MATCH BECAUSE "
+          + "YOU ARE NOT THE ADMIN OF THE TEAM");
+      getPrompt("\nPlease Enter a Host Team ID Where You Are the Admin (CTRL-D to EXIT): \n"
+          + "(See list above): ");
+      hostTeamID = getScanner().nextLine();
+      hostTeamIDTemp = Integer.parseInt(hostTeamID);
+    }
+
+    hostTeamID  = String.valueOf(hostTeamIDTemp);
+
+    getPrompt("\nEnter the Gym ID to Reserve the Gymnasium for this Match:\n"
         + "(See list above): ");
     gymID = getScanner().nextLine();
 
 //    getPrompt("\nEnter location of Team Match Game: ");
 //    location = getScanner().nextLine();
 
-    getPrompt("\nEnter date of Team Match Game: (format: mm-dd-yyyy): ");
+    getPrompt("\nEnter Date of the Team Match: (format: mm-dd-yyyy): ");
     gameDate = getScanner().nextLine();
 
-    getPrompt("\nEnter the start time of Team Match Game: (example format: 08:00:00): ");
+    getPrompt("\nEnter Start Time of Team Match: (example format: 08:00:00): ");
     startAt = getScanner().nextLine();
 
-    getPrompt("\nEnter the end time of the game (example format: 10:00:00): ");
+    getPrompt("\nEnter End Time of Team Match: (example format: 10:00:00): ");
     endAt = getScanner().nextLine();
 
     String[] str = {hostTeamID, null, gymID, gameDate, startAt, endAt};

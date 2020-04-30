@@ -72,9 +72,12 @@ public class MenuController {
       LoginDAO loginDao = new LoginDAO();
       boolean userExists = loginDao.authLogin(username, password);
       if (userExists) {
-        menu.getPrompt("\n" + menu.getLineBreak(username.length(), 39) + "\nHello " + username + ", "
-            + "you have succesfully logged in!\n");
+        menu.getPrompt( "\nHELLO " + username + ", "
+            + "You Have Successfully Logged In!\n");
         loggedInUserID = loginDao.getLoggedInUserID();
+//        menu.getPrompt("\n" + menu.getLineBreak(username.length(), 39) + "\nHello " + username + ", "
+//            + "You Have Succesfully Logged In!\n" + menu.getLineBreak(username.length(), 39) + "\n");
+//        loggedInUserID = loginDao.getLoggedInUserID();
         setMenu(new MainSubMenu());
         displayMenu();
       } else {
@@ -88,20 +91,23 @@ public class MenuController {
     else if (menu instanceof MainSubMenu) {
       switch (selectionArr[0]) {
         case "1":
-          System.out.println("\n================================");
-          System.out.println("Create or Join a Personal Match:");
+          System.out.println("\n====================");
+          System.out.println("Personal Match Menu:");
+          System.out.println("====================");
           setMenu(new PersonalMatchMenu());
           displayMenu();
           break;
         case "2":
-          System.out.println("\n=====================");
-          System.out.println("Create or Join a Team:");
+          System.out.println("\n==========");
+          System.out.println("Team Menu:");
+          System.out.println("==========");
           setMenu(new TeamMenu());
           displayMenu();
           break;
         case "3":
-          System.out.println("\n============================");
-          System.out.println("Create or Join a Team Match:");
+          System.out.println("\n================");
+          System.out.println("Team Match Menu:");
+          System.out.println("================");
           setMenu(new TeamMatchMenu());
           displayMenu();
           break;
@@ -266,6 +272,8 @@ public class MenuController {
           displayMenu();
           break;
         case "3":
+          teamDAO = new TeamDAO();
+          teamDAO.listTeamsJoined(loggedInUserID);
           setMenu(new LeaveTeamMenu());
           displayMenu();
           break;
@@ -332,7 +340,7 @@ public class MenuController {
         case "1":
           teamDAO = new TeamDAO();
           teamDAO.listTeamsCreated(loggedInUserID);
-          setMenu(new CreateTeamMatchMenu());
+          setMenu(new CreateTeamMatchMenu(loggedInUserID));
           displayMenu();
           break;
         case "2":

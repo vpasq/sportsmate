@@ -21,7 +21,8 @@ public class GymDAO extends DAO {
       PreparedStatement pStatement = conn.prepareStatement(sql);
       ResultSet resultSet = pStatement.executeQuery();
 
-      getPrompt("\n" + getLineBreak(23) + "\nList of Available Gyms:\n");
+      getPrompt("\n" + getLineBreak(23) + "\nList of Available Gyms:\n"
+      + getLineBreak(23) + "\n");
 
       while (resultSet.next()) {
         pmg_id = resultSet.getInt("pmg_id");

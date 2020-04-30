@@ -32,6 +32,7 @@ public class TeamMatchDAO extends DAO {
   public void createTeamMatch(int loggedInUserID, int hostTeamID, int gym_id,
       String game_date, String startAt, String endAt ) {
 
+
         try {
           conn = getConnection();
 
@@ -48,27 +49,66 @@ public class TeamMatchDAO extends DAO {
 
          if (resultSet.next()) {
 
-           SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
-           sdf.setTimeZone(TimeZone.getTimeZone("EST"));
-           //java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-           java.util.Date date = sdf.parse(game_date);
-           java.sql.Timestamp sqlDate = new java.sql.Timestamp(date.getTime());
+          SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+          sdf.setTimeZone(TimeZone.getTimeZone("EST"));
+          //java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+          java.util.Date date = sdf.parse(game_date);
+          java.sql.Timestamp sqlDate = new java.sql.Timestamp(date.getTime());
 
-           String sql2 = "INSERT INTO team_match VALUES (default,?,?,?,?,?,?)";
-           PreparedStatement pStatement2 = conn.prepareStatement(sql2, Statement.RETURN_GENERATED_KEYS);
-           pStatement2.setInt(1, hostTeamID);
-           pStatement2.setNull(2, NULL);
-           pStatement2.setInt(3, gym_id);
-           pStatement2.setTimestamp(4, sqlDate);
-           pStatement2.setTime(5, Time.valueOf(startAt));
-           pStatement2.setTime(6, Time.valueOf(endAt));
-           pStatement2.executeUpdate();
-           System.out.println("\nYou have successfully created a Team Match Game!");
+          String sql2 = "INSERT INTO team_match VALUES (default,?,?,?,?,?,?)";
+          PreparedStatement pStatement2 = conn
+              .prepareStatement(sql2, Statement.RETURN_GENERATED_KEYS);
+          pStatement2.setInt(1, hostTeamID);
+          pStatement2.setNull(2, NULL);
+          pStatement2.setInt(3, gym_id);
+          pStatement2.setTimestamp(4, sqlDate);
+          pStatement2.setTime(5, Time.valueOf(startAt));
+          pStatement2.setTime(6, Time.valueOf(endAt));
+          pStatement2.executeUpdate();
+          System.out.println("\nYOU HAVE SUCCESSFULLY CREATED A TEAM MATCH!");
 
        } else {
         System.out.println("\nYou cannot create this Team Match because you are not the"
             + " admin of the Team.");
       }
+
+        } catch (Exception e) {
+          System.err.printf("Cannot connect to server%n%s", e);
+          System.err.println(e.getMessage());
+          e.printStackTrace();
+        }
+
+        if (conn != null) {
+          try {
+            conn.close();
+            //System.out.println("Disconnected from database.");
+          } catch (Exception e) { /* ignore close errors */ }
+        }
+
+  }
+
+
+  public boolean checkIfTeamAdmin(int loggedInUserID2, int hostTeamID2) {
+
+    try {
+      conn = getConnection();
+
+      String sql2 = "select t.team_id "
+          + "from player p, team t "
+          + "where p.user_id=? "
+          + "and p.pid = t.admin_id "
+          + "and t.team_id=? ";
+
+      PreparedStatement pStatement2 = conn.prepareStatement(sql2);
+      pStatement2.setInt(1, loggedInUserID2);
+      pStatement2.setInt(2, hostTeamID2);
+      ResultSet resultSet2 = pStatement2.executeQuery();
+
+      if (resultSet2.next()) {
+        return true;
+
+      }
+
 
     } catch (Exception e) {
       System.err.printf("Cannot connect to server%n%s", e);
@@ -82,7 +122,12 @@ public class TeamMatchDAO extends DAO {
         //System.out.println("Disconnected from database.");
       } catch (Exception e) { /* ignore close errors */ }
     }
+    return false;
   }
+
+
+
+
 
 
   public void joinTeamMatch(int loggedInUserID, int guestTeamID, int teamMatchID) {
@@ -111,10 +156,10 @@ public class TeamMatchDAO extends DAO {
       pStatement2.setInt(2, teamMatchID);
       int numRowsUpdated = pStatement2.executeUpdate();;
 
-        System.out.println("\nYou have successfully joined a Team Match!");
+        System.out.println("\nYOU HAVE SUCCSEEFULLY JOINED A TEAM MATCH!");
       } else {
-        System.out.println("\nYou cannot join this Team Match because you are not the"
-            + " admin of your Team, or this match does not exist.");
+        System.out.println("\nYOU CANNOT JOIN THIS TEAM MATCH BECAUSE YOU ARE NOT THE"
+            + " ADMIN OF YOUR TEAM, OR THE MATCH DOES NOT EXIST!");
       }
 
     } catch (Exception e) {
@@ -262,8 +307,8 @@ public class TeamMatchDAO extends DAO {
         username = resultSet.getString("u.username");
 
         System.out.println();
-       //System.out.println("Match Creator: " + username);
         System.out.println("Match ID: " + match_id);
+       System.out.println("Match Creator: " + username);
         System.out.println("Host Team ID: " + host_id);
         System.out.println("Guest Team ID: " + guest_id);
         System.out.println("Gym ID: " + gym_id);

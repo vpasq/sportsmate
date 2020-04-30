@@ -26,14 +26,15 @@ public class CreatePersonalMatchMenu extends AbstractMenu {
     GymDAO gymDAO = new GymDAO();
     gymDAO.listAllGyms();
 
-    getPrompt("\n" + getLineBreak(27) + "\nCreate a new Personal Match\n\n");
+    getPrompt("\n" + getLineBreak(27) + "\nCreate a new Personal Match\n" +
+        getLineBreak(27) + "\n");
 
-    getPrompt("Enter the Gym ID of the location of the game:\n"
-        + "(See list of available Gyms): ");
+    getPrompt("\nEnter Gym ID to Reserve the Gymnasium for this Match:\n"
+        + "(See list above): ");
     gymID = getScanner().nextLine();
 
 
-    getPrompt("Enter the date of the game (format: mm-dd-yyyy): ");
+    getPrompt("Enter Date of the Match (format: mm-dd-yyyy): ");
 
     game_date = getScanner().nextLine();
     //check date use function in check class
@@ -46,7 +47,7 @@ public class CreatePersonalMatchMenu extends AbstractMenu {
     }
 
 
-    getPrompt("Enter the start time of the game (example format: 08:00:00): ");
+    getPrompt("Enter Start Time of the Match (example format: 08:00:00): ");
     startAt = getScanner().nextLine();
     //check time use function in check class
     // created by zhengkang fan
@@ -57,7 +58,7 @@ public class CreatePersonalMatchMenu extends AbstractMenu {
       check_start_time = check.check_date_in_the_day (startAt);
     }
 
-    getPrompt("Enter the end time of the game (example format: 10:00:00): ");
+    getPrompt("Enter End Time of the Match (example format: 10:00:00): ");
     endAt = getScanner().nextLine();
     //check time is after start time or not
     // created by zhengkang fan
@@ -87,8 +88,8 @@ public class CreatePersonalMatchMenu extends AbstractMenu {
       }
     }
 
-    getPrompt("Enter the game type as follows \n 1. 1 on 1 \n 2. 2 on 2 \n 3. 3 on 3 \n 4. 4 on 4 \n 5. 5 on 5 " +
-            "\nPlease enter the number: ");
+    getPrompt("Enter Game Type as Follows: \n 1. 1 on 1 \n 2. 2 on 2 \n 3. 3 on 3 \n 4. 4 on 4 \n 5. 5 on 5 " +
+            "\nEnter Number for the Game Type: ");
     game_type = getScanner().nextLine();
     //check game type use function in check class
     // created by zhengkang fan
@@ -100,7 +101,7 @@ public class CreatePersonalMatchMenu extends AbstractMenu {
     }
     game_type = game_type_str;  // save the1 corresponding string
 
-    getPrompt("Enter the number of initial players: ");
+    getPrompt("Enter Number of Initial Players: ");
     num_initial_players = getScanner().nextLine();
     //check initial players function in check class
     // created by zhengkang fan

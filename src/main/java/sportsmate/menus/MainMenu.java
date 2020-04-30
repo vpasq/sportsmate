@@ -10,8 +10,9 @@ public class MainMenu extends AbstractMenu {
   @Override
   public String[] displayMenu() {
 
-    getPrompt("\nWelcome to SportsMate!\n" + getLineBreak(22));
-    getPrompt("Enter 1 to Log In\nEnter 2 to Create a New Account\nEnter 3 to Exit");
+    System.out.println("\n\n======================");
+    getPrompt("Welcome to SportsMate!\n" + getLineBreak(22));
+    getPrompt("\n\nEnter 1 Log In\nEnter 2 Create a New Account\nEnter 3 Exit\n");
 
     try {
       do {
@@ -26,13 +27,4 @@ public class MainMenu extends AbstractMenu {
     return str;
   }
 
-  /**
-   * User prompt.
-   *
-   * @param str string to prompt user
-   */
-  public void getPrompt(String str) {
-    System.out.println(str);
-    System.out.println();
-  }
 }

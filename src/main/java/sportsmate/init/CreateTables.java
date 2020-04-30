@@ -104,7 +104,8 @@ public class CreateTables extends DAO {
           + " tmplayer_id integer,"
           + " t_id integer,"
           + " primary key (tmplayer_id, t_id),"
-          + " foreign key (tmplayer_id) references player(pid)"
+          + " foreign key (tmplayer_id) references player (pid), "
+          + " foreign key (t_id) references team (team_id)"
           + ")";
 
       pStatement = conn
@@ -154,7 +155,9 @@ public class CreateTables extends DAO {
           + "("
           + " p_id integer,"
           + " match_id integer,"
-          + " primary key (p_id, match_id)"
+          + " primary key (p_id, match_id),"
+          + " foreign key (p_id) references player(pid),"
+          + " foreign key (match_id) references personal_match(pmatch_id)"
           + ")";
 
       pStatement = conn
@@ -292,8 +295,9 @@ public class CreateTables extends DAO {
       ResultSet resultSet;
 
       sql = "select * "
-          + "from personal_match pm, personal_match_gymnasium pmg "
-          + "where pmg.pmg_name=? "
+          + "from personal_match_gymnasium pmg "
+          + "where pmg.pmg_id =1 "
+          + "and pmg.pmg_name=? "
           + "and pmg.pmg_location=? "
           + "";
       pStatement = conn.prepareStatement(sql);
@@ -311,7 +315,7 @@ public class CreateTables extends DAO {
 
 
       sql = "select * "
-          + "from personal_match pm, personal_match_gymnasium pmg "
+          + "from personal_match_gymnasium pmg "
           + "where pmg.pmg_name=? "
           + "and pmg.pmg_location=? "
           + "";
@@ -330,7 +334,7 @@ public class CreateTables extends DAO {
 
 
       sql = "select * "
-          + "from personal_match pm, personal_match_gymnasium pmg "
+          + "from personal_match_gymnasium pmg "
           + "where pmg.pmg_name=? "
           + "and pmg.pmg_location=? "
           + "";
@@ -361,95 +365,91 @@ public class CreateTables extends DAO {
 
 
 
-//      sql = "select * from personal_match where player_id=? and location=? and game_date=?"
-//          + "and start_at=? and end_at=? and game_type=? and num_initial_players=? and num_players_joined=?";
-      sql = "select * from personal_match where player_id=? and gym_id=? and game_date=?"
-          + "and start_at=? and end_at=? and game_type=? and num_initial_players=?";
-      pStatement = conn.prepareStatement(sql);
-      pStatement.setInt(1, 1);
-      pStatement.setInt(2, 1);
-      pStatement.setDate(3, Date.valueOf("2020-09-04"));
-      pStatement.setTime(4, Time.valueOf("09:00:00"));
-      pStatement.setTime(5, Time.valueOf("11:00:00"));
-      pStatement.setString(6, "1");
-      pStatement.setInt(7, 1 );
-      //pStatement.setInt(8, 0 );
-      resultSet = pStatement.executeQuery();
-
-      if (!resultSet.next()) {
-        sql = "INSERT INTO personal_match VALUES (default, ?,?,?,?,?,?,?,?)";
-        pStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        pStatement.setInt(1, 1);
-        pStatement.setInt(2, 1);
-        pStatement.setDate(3, Date.valueOf("2020-09-04"));
-        pStatement.setTime(4, Time.valueOf("09:00:00"));
-        pStatement.setTime(5, Time.valueOf("11:00:00"));
-        pStatement.setString(6, "1");
-        pStatement.setInt(7, 1);
-        pStatement.setInt(8, 0);
-        pStatement.executeUpdate();
-        //System.out.println("\nYou have successfully created a personal match!");
-      }
-
-//      sql = "select * from personal_match where player_id=? and location=? and game_date=?"
-//          + "and start_at=? and end_at=? and game_type=? and num_initial_players=? and num_players_joined=?";
-      sql = "select * from personal_match where player_id=? and gym_id=? and game_date=?"
-          + "and start_at=? and end_at=? and game_type=? and num_initial_players=?";
-      pStatement = conn.prepareStatement(sql);
-      pStatement.setInt(1, 2);
-      pStatement.setInt(2, 2);
-      pStatement.setDate(3, Date.valueOf("2020-10-10"));
-      pStatement.setTime(4, Time.valueOf("09:00:00"));
-      pStatement.setTime(5, Time.valueOf("11:00:00"));
-      pStatement.setString(6, "3");
-      pStatement.setInt(7, 3 );
-      //pStatement.setInt(8, 0 );
-      resultSet = pStatement.executeQuery();
-
-      if (!resultSet.next()) {
-        sql = "INSERT INTO personal_match VALUES (default, ?,?,?,?,?,?,?,?)";
-        pStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        pStatement.setInt(1, 2);
-        pStatement.setInt(2, 2);
-        pStatement.setDate(3, Date.valueOf("2020-10-10"));
-        pStatement.setTime(4, Time.valueOf("09:00:00"));
-        pStatement.setTime(5, Time.valueOf("11:00:00"));
-        pStatement.setString(6, "3");
-        pStatement.setInt(7, 3);
-        pStatement.setInt(8, 0);
-        pStatement.executeUpdate();
-        //System.out.println("\nYou have successfully created a personal match!");
-      }
-
-//      sql = "select * from personal_match where player_id=? and location=? and game_date=?"
-//          + "and start_at=? and end_at=? and game_type=? and num_initial_players=? and num_players_joined=?";
-      sql = "select * from personal_match where player_id=? and gym_id=? and game_date=?"
-          + "and start_at=? and end_at=? and game_type=? and num_initial_players=?";
-      pStatement = conn.prepareStatement(sql);
-      pStatement.setInt(1, 3);
-      pStatement.setInt(2, 3);
-      pStatement.setDate(3, Date.valueOf("2020-03-22"));
-      pStatement.setTime(4, Time.valueOf("08:00:00"));
-      pStatement.setTime(5, Time.valueOf("11:00:00"));
-      pStatement.setString(6, "3");
-      pStatement.setInt(7, 3);
-      //pStatement.setInt(8, 0);
-      resultSet = pStatement.executeQuery();
-
-      if (!resultSet.next()) {
-        sql = "INSERT INTO personal_match VALUES (default, ?,?,?,?,?,?,?,?)";
-        pStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-        pStatement.setInt(1, 3);
-        pStatement.setInt(2, 3);
-        pStatement.setDate(3, Date.valueOf("2020-03-22"));
-        pStatement.setTime(4, Time.valueOf("08:00:00"));
-        pStatement.setTime(5, Time.valueOf("11:00:00"));
-        pStatement.setString(6, "3");
-        pStatement.setInt(7, 3);
-        pStatement.setInt(8, 0);
-        pStatement.executeUpdate();
-        //System.out.println("\nYou have successfully created a personal match!");
-      }
+//      sql = "select * from personal_match where player_id=? and gym_id=? and game_date=?"
+//          + "and start_at=? and end_at=? and game_type=? and num_initial_players=?";
+//      pStatement = conn.prepareStatement(sql);
+//      pStatement.setInt(1, 1);
+//      pStatement.setInt(2, 1);
+//      pStatement.setDate(3, Date.valueOf("2020-09-04"));
+//      pStatement.setTime(4, Time.valueOf("09:00:00"));
+//      pStatement.setTime(5, Time.valueOf("11:00:00"));
+//      pStatement.setString(6, "1");
+//      pStatement.setInt(7, 1 );
+//      //pStatement.setInt(8, 0 );
+//      resultSet = pStatement.executeQuery();
+//
+//      if (!resultSet.next()) {
+//        sql = "INSERT INTO personal_match VALUES (default, ?,?,?,?,?,?,?,?)";
+//        pStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+//        pStatement.setInt(1, 1);
+//        pStatement.setInt(2, 1);
+//        pStatement.setDate(3, Date.valueOf("2020-09-04"));
+//        pStatement.setTime(4, Time.valueOf("09:00:00"));
+//        pStatement.setTime(5, Time.valueOf("11:00:00"));
+//        pStatement.setString(6, "1");
+//        pStatement.setInt(7, 1);
+//        pStatement.setInt(8, 0);
+//        pStatement.executeUpdate();
+//        //System.out.println("\nYou have successfully created a personal match!");
+//      }
+//
+//
+//      sql = "select * from personal_match where player_id=? and gym_id=? and game_date=?"
+//          + "and start_at=? and end_at=? and game_type=? and num_initial_players=?";
+//      pStatement = conn.prepareStatement(sql);
+//      pStatement.setInt(1, 2);
+//      pStatement.setInt(2, 2);
+//      pStatement.setDate(3, Date.valueOf("2020-10-10"));
+//      pStatement.setTime(4, Time.valueOf("09:00:00"));
+//      pStatement.setTime(5, Time.valueOf("11:00:00"));
+//      pStatement.setString(6, "3");
+//      pStatement.setInt(7, 3 );
+//      //pStatement.setInt(8, 0 );
+//      resultSet = pStatement.executeQuery();
+//
+//      if (!resultSet.next()) {
+//        sql = "INSERT INTO personal_match VALUES (default, ?,?,?,?,?,?,?,?)";
+//        pStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+//        pStatement.setInt(1, 2);
+//        pStatement.setInt(2, 2);
+//        pStatement.setDate(3, Date.valueOf("2020-10-10"));
+//        pStatement.setTime(4, Time.valueOf("09:00:00"));
+//        pStatement.setTime(5, Time.valueOf("11:00:00"));
+//        pStatement.setString(6, "3");
+//        pStatement.setInt(7, 3);
+//        pStatement.setInt(8, 0);
+//        pStatement.executeUpdate();
+//        //System.out.println("\nYou have successfully created a personal match!");
+//      }
+//
+//
+//      sql = "select * from personal_match where player_id=? and gym_id=? and game_date=?"
+//          + "and start_at=? and end_at=? and game_type=? and num_initial_players=?";
+//      pStatement = conn.prepareStatement(sql);
+//      pStatement.setInt(1, 3);
+//      pStatement.setInt(2, 3);
+//      pStatement.setDate(3, Date.valueOf("2020-03-22"));
+//      pStatement.setTime(4, Time.valueOf("08:00:00"));
+//      pStatement.setTime(5, Time.valueOf("11:00:00"));
+//      pStatement.setString(6, "3");
+//      pStatement.setInt(7, 3);
+//      //pStatement.setInt(8, 0);
+//      resultSet = pStatement.executeQuery();
+//
+//      if (!resultSet.next()) {
+//        sql = "INSERT INTO personal_match VALUES (default, ?,?,?,?,?,?,?,?)";
+//        pStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+//        pStatement.setInt(1, 3);
+//        pStatement.setInt(2, 3);
+//        pStatement.setDate(3, Date.valueOf("2020-03-22"));
+//        pStatement.setTime(4, Time.valueOf("08:00:00"));
+//        pStatement.setTime(5, Time.valueOf("11:00:00"));
+//        pStatement.setString(6, "3");
+//        pStatement.setInt(7, 3);
+//        pStatement.setInt(8, 0);
+//        pStatement.executeUpdate();
+//        //System.out.println("\nYou have successfully created a personal match!");
+//      }
 
 
 

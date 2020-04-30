@@ -30,7 +30,8 @@ public class TeamDAO extends DAO {
       pStatement.setString(1, team_name);
       pStatement.setInt(2, admin_id);
       pStatement.executeUpdate();
-      System.out.println("\nYou have successfully created a team!");
+      //System.out.println("\nYou have successfully created a team!");
+      System.out.println("\nYOU HAVE SUCCSESSFULLY CREATED A TEAM!");
 
     }
     catch (Exception e){
@@ -65,7 +66,7 @@ public class TeamDAO extends DAO {
       pStatement.setInt(1, playerID);
       pStatement.setInt(2, teamID);
       pStatement.executeUpdate();
-      System.out.printf("\nYou have successfully joined a team!\n");
+      System.out.printf("\nYOU HAVE SUCCESSFULLY JOINED THE TEAM!\n");
 
 
 
@@ -96,7 +97,7 @@ public class TeamDAO extends DAO {
       pStatement.setInt(1, tmplayer_id);
       pStatement.setInt(2, t_id);
       pStatement.executeUpdate();
-      System.out.printf("\nYou have successfully left the team!\n");
+      System.out.printf("\nYOU HAVE SUCCESSFULLY LEFT THE TEAM!\n");
 
     }
     catch (Exception e){
@@ -126,18 +127,18 @@ public class TeamDAO extends DAO {
 //          + "and p.pid = t.admin_id";
 
       String sql = "select u.username, t.team_id, t.team_name, t.admin_id "
-          + "from user u, player p, team t, team_match_players tmp "
+          + "from user u, player p, team t "
           + "where p.pid=? "
           + "and p.user_id = u.id "
-          + "and p.user_id = t.admin_id";
+          + "and p.pid= t.admin_id";
 
       //System.out.println("logged in user: " + loggedInUserID);
       PreparedStatement pStatement = conn.prepareStatement(sql);
       pStatement.setInt(1, loggedInUserID);
       ResultSet resultSet = pStatement.executeQuery();
 
-      getPrompt("\n" + getLineBreak(49) + "\nList of Teams "
-          + "you have created and are the admin:\n");
+      getPrompt("\n" + getLineBreak(38) + "\nList of Teams "
+          + "where you are the admin:\n");
 
 //      System.out.printf("%n%-11s%-25s%-10s%n",
 //          "Team ID", "Team Name", "Admin ID");
@@ -198,7 +199,7 @@ public class TeamDAO extends DAO {
       ResultSet resultSet = pStatement.executeQuery();
 
       getPrompt("\n" + getLineBreak(30) + "\nList of Teams"
-          + " you have joined:\n");
+          + " you Have Joined:\n");
 
 //      System.out.printf("%n%-11s%-14s%n",
 //          "Team ID", "Team Name");
@@ -253,7 +254,7 @@ public class TeamDAO extends DAO {
       ResultSet resultSet = pStatement.executeQuery();
 
       getPrompt("\n" + getLineBreak(22) + "\nList of All the Teams:\n");
-//      System.out.printf("%n%-11s%-14s%n", "Team ID", "Team Name");
+
 
       while (resultSet.next()) {
         team_id = resultSet.getInt("team_id");
